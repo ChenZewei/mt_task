@@ -7,7 +7,7 @@ LFLAGS = #-Wl,-O1
 
 TARGET = mt_task
 
-OBJ_FILES = mt_task.o clocks.o common.o cycles.o kernel_iface.o migration.o syscalls.o task.o 
+OBJ_FILES = mt_task.o clocks.o common.o kernel_iface.o migration.o syscalls.o task.o 
 
 mt_task: $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -o $(TARGET) $(OBJ_FILES)
