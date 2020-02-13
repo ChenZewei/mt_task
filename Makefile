@@ -7,7 +7,7 @@ LFLAGS = #-Wl,-O1
 
 TARGET = mt_task
 
-OBJ_FILES = mt_task.o clocks.o common.o kernel_iface.o migration.o syscalls.o task.o 
+OBJ_FILES = mt_task.o clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o task.o 
 
 mt_task: $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -o $(TARGET) $(OBJ_FILES)
@@ -26,6 +26,9 @@ cycles.o:src/cycles.c
 
 kernel_iface.o:src/kernel_iface.c
 	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/kernel_iface.c
+
+litmus.o:src/litmus.c
+	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/litmus.c
 
 migration.o:src/migration.c
 	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/migration.c
