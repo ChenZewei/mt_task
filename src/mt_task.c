@@ -225,7 +225,7 @@ void* rt_thread(void *tcontext)
 	 */
 	if (MAX_INT != ctx->partition) {
 		param.cpu = domain_to_first_cpu(ctx->partition);
-		CALL( be_migrate_to(ctx->partition) );
+		CALL( be_migrate_to_domain(ctx->partition) );
 	}
 
 	CALL( set_rt_task_param(gettid(), &param) );
