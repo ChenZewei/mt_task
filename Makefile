@@ -9,8 +9,8 @@ TARGET = mt_task
 
 OBJ_FILES = mt_task.o clocks.o common.o cycles.o kernel_iface.o migration.o syscalls.o task.o 
 
-mt_task:mt_task.o $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -o $(TARGET) mt_task.o $(OBJ_FILES)
+mt_task: $(OBJ_FILES)
+	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -o $(TARGET) $(OBJ_FILES)
 
 mt_task.o:src/mt_task.c
 	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/mt_task.c
