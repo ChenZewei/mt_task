@@ -1,43 +1,37 @@
 CC = gcc
-GXX = g++
-CFLAGS = 
-INCPATH = -I. -I./include -I./include/asm -I./include/litmus
-LIBS = -pthread
-LFLAGS = #-Wl,-O1
+CFLAGS = -D_GNU_SOURCE -pthread
+INCPATH = -I. -I./include -I/usr/include -I./include/asm
+LIB = 
+OBJ_FILES = clocks.o kernel_iface.o litmus.o migration.o syscalls.o task.o
 
-TARGET = mt_task
+mt_task: mt_task.o $(OBJ_FILES)
+	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
 
-OBJ_FILES = mt_task.o clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o task.o 
+rtmt: rtmt.o $(OBJ_FILES)
+	$(CC) $(CFLAGS) -fopenmp $(INCPATH) -o rtmt rtmt.o $(OBJ_FILES) 
 
-mt_task: $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -o $(TARGET) $(OBJ_FILES)
+mt_task.o: src/mt_task.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/mt_task.c
 
-mt_task.o:src/mt_task.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/mt_task.c
+rtmt.o: src/rtmt.c
+	$(CC) $(CFLAGS) -fopenmp $(INCPATH) -c src/rtmt.c
 
-clocks.o:src/clocks.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/clocks.c
+clocks.o: src/clocks.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/clocks.c
 
-common.o:src/common.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/common.c
+kernel_iface.o: src/kernel_iface.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/kernel_iface.c
 
-cycles.o:src/cycles.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/cycles.c
+litmus.o: src/litmus.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/litmus.c
 
-kernel_iface.o:src/kernel_iface.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/kernel_iface.c
+migration.o: src/migration.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/migration.c
 
-litmus.o:src/litmus.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/litmus.c
+syscalls.o: src/syscalls.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/syscalls.c
 
-migration.o:src/migration.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/migration.c
-
-syscalls.o:src/syscalls.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/syscalls.c
-
-task.o:src/task.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LIBS) $(LFLAGS) -c src/task.c
-
+task.o: src/task.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/task.c
 
 
