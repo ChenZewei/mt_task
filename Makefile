@@ -1,7 +1,7 @@
 CC = gcc
 GXX = g++
 CFLAGS = 
-INCPATH = -I. -I./include -I./include/asm -I./include/litmus -I/usr/include
+INCPATH = -I. -I./include -I./include/asm -I./include/litmus
 LIBS = -pthread
 LFLAGS = #-Wl,-O1
 
