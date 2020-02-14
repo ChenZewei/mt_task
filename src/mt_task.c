@@ -144,6 +144,8 @@ int main(int argc, char** argv)
 
 	assert(constrained_pd > 0);
 
+	printf("constrained parallel degree:%d\n", constrained_pd);
+
 
 	/*****
 	 * 3) Initialize LITMUS^RT.
