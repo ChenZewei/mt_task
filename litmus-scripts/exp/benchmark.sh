@@ -1,0 +1,12 @@
+rtspin -v -w 3 30 50 &
+rtspin -v -w 5 50 50 &
+rtspin -v -w 6 60 50 &
+rtspin -v -w 7 70 50 &
+rtspin -v -w 8 80 50 &
+rtspin -v -w 9 90 50 &
+rtspin -v -w 10 100 50 &
+rtspin -v -w 11 110 50 &
+rtspin -v -w 12 120 50 &
+rtspin -v -w 13 130 50 &
+rtspin -v -w 14 140 50 &
+rtspin -v -w 15 150 50 &
