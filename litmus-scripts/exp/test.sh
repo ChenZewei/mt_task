@@ -14,7 +14,7 @@
 
 # ./mt_task -e 60 -p 300 -d 300 -m 8 -t 60 &
 
-./mt_task -e 40 -p 200 -d 200 -m 8 -t 10 -P 0 &
+./mt_task -e 40 -p 200 -d 200 -m  -t 10 -P 0 &
 
 ./mt_task -e 40 -p 200 -d 200 -m 8 -t 10 -P 1 &
 
