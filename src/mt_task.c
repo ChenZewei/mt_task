@@ -207,7 +207,7 @@ void* rt_thread(void *tcontext) {
 	param.relative_deadline = ms2ns(ctx->deadline);
 	param.constrained_parallel_degree = ctx->cpd;
 
-	param.priority = LITMUS_LOWEST_PRIORITY;
+	// param.priority = LITMUS_LOWEST_PRIORITY;
 	
 	if (MAX_INT != ctx->partition) {
 		param.cpu = domain_to_first_cpu(ctx->partition);
