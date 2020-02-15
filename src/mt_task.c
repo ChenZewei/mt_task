@@ -32,7 +32,7 @@
 /* Let's create 10 threads in the example, 
  * for a total utilization of 1.
  */
-#define NUM_THREADS      16
+#define NUM_THREADS      64
 
 /* The information passed to each thread. Could be anything. */
 struct thread_context {
