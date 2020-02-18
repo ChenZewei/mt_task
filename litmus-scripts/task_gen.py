@@ -1,8 +1,11 @@
-import random
+import random, sys
 
-p_num = 8
-m = 4
-duration = 10
+print("argv:", len(sys.argv))
+print("argc:", str(sys.argv))
+
+p_num = int(sys.argv[1])
+m = int(sys.argv[2])
+duration = int(sys.argv[3])
 
 T=[random.randint(100,1000) for _ in range(3 * p_num)]
 
@@ -22,3 +25,4 @@ for t in T:
   p.write('./mt_task -e %d -p %d -d %d -m %d -t %d -P %d &\n' % (t/10, t, t, m, duration, pid))
   i = i + 1
 p.close()
+
