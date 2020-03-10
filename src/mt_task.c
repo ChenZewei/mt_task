@@ -28,11 +28,20 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
+#define NUMS 4096
 
 /* Let's create 10 threads in the example, 
  * for a total utilization of 1.
  */
 #define NUM_THREADS      64
+
+
+static int cycles_ms = 2400000;
+
+typedef struct shared_resource {
+	int lock_od;
+	double cs_length; /* millisecond */
+} shared_resource;
 
 /* The information passed to each thread. Could be anything. */
 struct thread_context {
@@ -43,7 +52,9 @@ struct thread_context {
 	long iteration;
 	int cpd;
 	int partition;
+	shared_resource sr;
 };
+
 
 /* The real-time thread program. Doesn't have to be the same for
  * all threads. Here, we only have one that will invoke job().
@@ -56,7 +67,8 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
-void loop(long ms);
+void loop_ms(long ms);
+void loop_us(long us);
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -85,6 +97,7 @@ int main(int argc, char** argv)
 	int i;
 	struct thread_context ctx[NUM_THREADS];
 	pthread_t             task[NUM_THREADS];
+	shared_resource 			sr;
 
 	/* The task is in background mode upon startup. */		
   long	wcet, sub_wcet, period, deadline, parallel_degree, constrained_pd, iteration, duration, partition;
@@ -97,12 +110,21 @@ int main(int argc, char** argv)
 	duration = 1;
 	partition = MAX_INT;
 
+	/* locking */
+	int lock_od = -1;
+	int resource_id = 0;
+	const char *lock_namespace = "./mt_task-locks";
+	int protocol = -1;
+	double cs_length = 1; /* microsecond */
+
 	/*****
 	 * 1) Command line paramter parsing would be done here.
 	 */
 	if (1 != argc) {
 		for (int arg = 1; arg < argc; arg++) {
-			if (0 == strcmp(argv[arg], "-e"))
+			if (0 == strcmp(argv[arg], "-a"))
+				cycles_ms = atoi(argv[++arg]);
+			else if (0 == strcmp(argv[arg], "-e"))
 				wcet = atoi(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-p"))
 				period = atoi(argv[++arg]);
@@ -114,6 +136,16 @@ int main(int argc, char** argv)
 			// 	constrained_pd = atoi(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-t"))
 				duration = atoi(argv[++arg]); 
+			else if (0 == strcmp(argv[arg], "-P"))
+        partition = atoi(argv[++arg]);
+			else if (0 == strcmp(argv[arg], "-L")) {
+				protocol = lock_protocol_for_name(argv[++arg]);
+				if (protocol < 0)
+					usage("Unknown locking protocol specified.");
+			} else if (0 == strcmp(argv[arg], "-R"))
+        resource_id = want_non_negative_int(argv[++arg], "-R");
+			else if (0 == strcmp(argv[arg], "-L"))
+        cs_length = want_positive_double(argv[++arg], "-L");
 			else if (0 == strcmp(argv[arg], "-P"))
         partition = atoi(argv[++arg]);
 			else {
@@ -146,6 +178,18 @@ int main(int argc, char** argv)
 
 	printf("constrained parallel degree:%d\n", constrained_pd);
 
+	if (protocol >= 0) {
+		/* open reference to semaphore */
+		lock_od = litmus_open_lock(protocol, resource_id, lock_namespace, &partition);
+		if (lock_od < 0) {
+			perror("litmus_open_lock");
+			usage("Could not open lock.");
+		}
+	}
+	sr.lock_od = lock_od;
+	sr.cs_length = cs_length;
+
+
 
 	/*****
 	 * 3) Initialize LITMUS^RT.
@@ -173,6 +217,7 @@ int main(int argc, char** argv)
 		ctx[i].iteration = iteration;
 		ctx[i].cpd = constrained_pd;
 		ctx[i].partition = partition;
+		ctx[i].sr = sr;
 		pthread_create(task + i, NULL, rt_thread, (void *) (ctx + i));
 	}
 
@@ -198,6 +243,7 @@ int main(int argc, char** argv)
 void* rt_thread(void *tcontext) {
 	struct rt_task param;
 	struct thread_context *ctx = (struct thread_context *) tcontext;
+	
 	/* Make presence visible. */
 	printf("RT Thread %d active. Workload:%d\n", ctx->id, ctx->sub_wcet);
 	
@@ -206,6 +252,7 @@ void* rt_thread(void *tcontext) {
 	param.period = ms2ns(ctx->period);
 	param.relative_deadline = ms2ns(ctx->deadline);
 	param.constrained_parallel_degree = ctx->cpd;
+	
 
 	// param.priority = LITMUS_LOWEST_PRIORITY;
 	
@@ -218,7 +265,18 @@ void* rt_thread(void *tcontext) {
 	CALL(wait_for_ts_release());
 
 	for (uint i = ctx->iteration; i > 0; i--) {
-		loop(ctx->sub_wcet);
+		// non-critical section 1
+		loop_ms(ctx->sub_wcet/2);
+
+		// critical section
+		if (-1 != ctx->sr.lock_od) {
+			litmus_lock(ctx->sr.lock_od);
+			loop_us(ctx->sr.cs_length);
+			litmus_unlock(ctx->sr.lock_od);
+		}
+
+		// non-critical section 2
+		loop_ms(ctx->sub_wcet/2);
 		sleep_next_period();
 	}
 
@@ -233,9 +291,17 @@ int job(void) {
 	return 0;
 }
 
-void loop(long ms) {
+void loop_ms(long ms) {
 	long n = 0;
 	long iteration = ms * 266666;
 	while (n < iteration) { n++; }
 	return NULL;
 }
+
+void loop_us(long us) {
+	long n = 0;
+	long iteration = us * 266;
+	while (n < iteration) { n++; }
+	return NULL;
+}
+
