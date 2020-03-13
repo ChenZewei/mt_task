@@ -308,15 +308,15 @@ int job(void) {
 
 void loop_ms(long ms) {
 	long n = 0;
-	long iteration = ms * 266666;
-	while (n < iteration) { n++; }
+	long iteration = ms * 400000;
+	while (++n < iteration) {}
 	return NULL;
 }
 
 void loop_us(long us) {
 	long n = 0;
-	long iteration = us * 266;
-	while (n < iteration) { n++; }
+	long iteration = us * 400;
+	while (++n < iteration) {}
 	return NULL;
 }
 
