@@ -36,6 +36,21 @@
  */
 #define NUM_THREADS      64
 
+const char *usage_msg =
+	"Usage:\n";
+
+
+static void usage(char *error) {
+	if (error)
+		fprintf(stderr, "Error: %s\n\n", error);
+	else {
+		fprintf(stderr, "rtspin: simulate a periodic or sporadic "
+		                "CPU-bound real-time task\n\n");
+	}
+	fprintf(stderr, "%s", usage_msg);
+	exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
+}
+
 
 static int cycles_ms = 2400000;
 
