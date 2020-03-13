@@ -141,7 +141,7 @@ int main(int argc, char** argv)
 			else if (0 == strcmp(argv[arg], "-L")) {
 				protocol = lock_protocol_for_name(argv[++arg]);
 				if (protocol < 0)
-					usage("Unknown locking protocol specified.");
+					printf("Unknown locking protocol specified.\n");
 			} else if (0 == strcmp(argv[arg], "-R"))
         resource_id = want_non_negative_int(argv[++arg], "-R");
 			else if (0 == strcmp(argv[arg], "-L"))
