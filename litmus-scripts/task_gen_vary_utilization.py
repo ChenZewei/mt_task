@@ -111,12 +111,15 @@ def gen_randfixedsum(nsets, u, n):
 print("argv:", len(sys.argv))
 print("argc:", str(sys.argv))
 
+# n = int(sys.argv[1])
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
+n = 2 * p_num
 
-U=gen_randfixedsum(1, p_num, 3 * p_num)
-T=[random.randint(100,1000) for _ in range(3 * p_num)]
+
+U=gen_randfixedsum(1, p_num, n)
+T=[random.randint(100,1000) for _ in range(n)]
 
 
 
@@ -124,8 +127,8 @@ T=[random.randint(100,1000) for _ in range(3 * p_num)]
 # print(T)
 # for global scheduling
 g = open('./global_test.sh', 'w')
-for i in range(3 * p_num)
-  g.write('./mt_task -e %d -p %d -d %d -m %d -t %d &\n' % (T[i] * U[i], T[i], T[i], m, duration))
+for i in range(n):
+  g.write('./mt_task -e %d -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
 g.close()
 
 # for t in T:
@@ -134,10 +137,8 @@ g.close()
 
 # for partitioned scheduling
 p = open('./partitioned_test.sh', 'w')
-i = 0
-for t in T:
+for i in range(n):
   pid = i % p_num
-  p.write('./mt_task -e %d -p %d -d %d -m %d -t %d -P %d &\n' % (t/10, t, t, m, duration, pid))
-  i = i + 1
+  p.write('./mt_task -e %d -p %d -d %d -m %d -t %d -P %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration, pid))
 p.close()
 
