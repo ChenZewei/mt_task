@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -D_GNU_SOURCE -pthread
 INCPATH = -I. -I./include -I/usr/include -I./include/asm
 LIB = 
-OBJ_FILES = clocks.o kernel_iface.o litmus.o migration.o syscalls.o task.o
+OBJ_FILES = clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o task.o
 
 mt_task: mt_task.o $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
@@ -18,6 +18,9 @@ rtmt.o: src/rtmt.c
 
 clocks.o: src/clocks.c
 	$(CC) $(CFLAGS) $(INCPATH) -c src/clocks.c
+
+common.o: src/common.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/common.c
 
 kernel_iface.o: src/kernel_iface.c
 	$(CC) $(CFLAGS) $(INCPATH) -c src/kernel_iface.c
