@@ -21,7 +21,7 @@
 
 /* Include the LITMUS^RT API.*/
 #include "litmus.h"
-
+#include "common.h"
 #include <assert.h>
 
 #define PERIOD            100
