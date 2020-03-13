@@ -182,8 +182,8 @@ int main(int argc, char** argv)
 		/* open reference to semaphore */
 		lock_od = litmus_open_lock(protocol, resource_id, lock_namespace, &partition);
 		if (lock_od < 0) {
-			perror("litmus_open_lock");
-			usage("Could not open lock.");
+			printf("litmus_open_lock\n");
+			printf("Could not open lock.\n");
 		}
 	}
 	sr.lock_od = lock_od;
