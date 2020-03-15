@@ -6,7 +6,7 @@ LIB =
 OBJ_FILES = clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o task.o
 
 test:
-	$(GG) src/test.cpp -o test
+	$(GG) -std=c++11 -std=gnu++11 src/test.cpp -o test
 
 mt_task: mt_task.o $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
