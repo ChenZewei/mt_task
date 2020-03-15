@@ -1,4 +1,5 @@
-import random, sys
+import numpy as np
+import random, sys, math
 
 def StaffordRandFixedSum(n, u, nsets):
     """
@@ -108,6 +109,10 @@ def gen_randfixedsum(nsets, u, n):
     """
     return StaffordRandFixedSum(n, u, nsets)
 
+def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
+  
+  return StaffordRandFixedSum(n, u, nsets) * (u_bound - l_bound) + l_bound
+
 print("argv:", len(sys.argv))
 print("argc:", str(sys.argv))
 
@@ -118,7 +123,8 @@ duration = int(sys.argv[3])
 n = 2 * p_num
 
 
-U=gen_randfixedsum(1, p_num, n)
+# U=gen_randfixedsum(1, p_num, n)
+U=gen_randfixedsum_rescale(1, p_num, n, 0, 2)
 T=[random.randint(100,1000) for _ in range(n)]
 
 

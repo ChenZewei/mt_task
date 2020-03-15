@@ -178,6 +178,10 @@ def gen_randfixedsum(nsets, u, n):
     """
     return StaffordRandFixedSum(n, u, nsets)
 
+def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
+  
+  return StaffordRandFixedSum(n, u, nsets) * (u_bound - l_bound) + l_bound
+
 
 def gen_kato_utilizations(nsets, umin, umax, target_util):
     """
