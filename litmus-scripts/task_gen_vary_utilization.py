@@ -110,8 +110,13 @@ def gen_randfixedsum(nsets, u, n):
     return StaffordRandFixedSum(n, u, nsets)
 
 def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
-  
-  return StaffordRandFixedSum(n, u, nsets) * (u_bound - l_bound) + l_bound
+  U = StaffordRandFixedSum(n, u, nsets)
+#   print(U)
+  for i in range(nsets):
+    for j in range(n):
+        U[i][j] = U[i][j] * (u_bound - l_bound) + l_bound
+#   print(U)
+  return U
 
 print("argv:", len(sys.argv))
 print("argc:", str(sys.argv))
@@ -134,6 +139,8 @@ T=[random.randint(100,1000) for _ in range(n)]
 # for global scheduling
 g = open('./global_test.sh', 'w')
 for i in range(n):
+  m = math.ceil(U[0][i])
+#   print(m)
   g.write('./mt_task -e %d -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
 g.close()
 
