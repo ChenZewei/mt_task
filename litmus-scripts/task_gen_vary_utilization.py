@@ -126,10 +126,12 @@ p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
 n = 2 * p_num
+u_ratio = float(sys.argv[4])
+ratio=1
 
 
 # U=gen_randfixedsum(1, p_num, n)
-U=gen_randfixedsum_rescale(1, p_num, n, 0, 2)
+U=gen_randfixedsum_rescale(1, u_ratio * p_num / ratio, n, 0, ratio)
 T=[random.randint(100,1000) for _ in range(n)]
 
 
@@ -138,11 +140,15 @@ T=[random.randint(100,1000) for _ in range(n)]
 # print(T)
 # for global scheduling
 g = open('./global_test.sh', 'w')
+g2 = open('./global_test_hc.sh', 'w')
 for i in range(n):
-  m = math.ceil(U[0][i])
+  if (m < math.ceil(U[0][i])):
+    m = math.ceil(U[0][i])
 #   print(m)
   g.write('./mt_task -e %d -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
+  g2.write('./mt_task_hc -e %d -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
 g.close()
+g2.close()
 
 # for t in T:
   

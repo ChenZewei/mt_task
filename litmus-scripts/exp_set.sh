@@ -1,6 +1,18 @@
-./ft/clean_all.sh
-./exp.sh 8 1 60 1
-./exp.sh 8 4 60 1
-./exp.sh 8 8 60 1
-./exp.sh 8 16 60 1
-./exp.sh 8 32 60 1
+#!/bin/bash
+
+EXP_DIR=/home/ubuntu/exp
+FT_DIR=$EXP_DIR/ft
+ST_DIR=$EXP_DIR/st
+
+cd $FT_DIR
+./clean_all.sh
+cd $ST_DIR
+./clean_all.sh
+cd $EXP_DIR
+
+for u in $(seq 0.1 0.1 1)
+do
+  ./exp.sh $1 1 $2 1 $u
+  ./exp.sh $1 4 $2 1 $u
+  ./exp.sh $1 8 $2 1 $u
+done
