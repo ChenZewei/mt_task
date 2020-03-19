@@ -8,11 +8,17 @@ OBJ_FILES = clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o tas
 test:
 	$(GG) -std=c++11 -std=gnu++11 src/test.cpp -o test
 
+mt_task_hc: mt_task_hc.o $(OBJ_FILES)
+	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
+
 mt_task: mt_task.o $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
 
 rtmt: rtmt.o $(OBJ_FILES)
 	$(CC) $(CFLAGS) -fopenmp $(INCPATH) -o rtmt rtmt.o $(OBJ_FILES) 
+
+mt_task_hc.o: src/mt_task_hc.c
+	$(CC) $(CFLAGS) $(INCPATH) -c src/mt_task_hc.c
 
 mt_task.o: src/mt_task.c
 	$(CC) $(CFLAGS) $(INCPATH) -c src/mt_task.c
