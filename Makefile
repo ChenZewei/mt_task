@@ -9,7 +9,7 @@ test:
 	$(GG) -std=c++11 -std=gnu++11 src/test.cpp -o test
 
 mt_task_hc: mt_task_hc.o $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
+	$(CC) $(CFLAGS) $(INCPATH) -o mt_task_hc mt_task_hc.o $(OBJ_FILES) 
 
 mt_task: mt_task.o $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCPATH) -o mt_task mt_task.o $(OBJ_FILES) 
