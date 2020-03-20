@@ -20,7 +20,7 @@ sleep `expr 5 + $3/1000` | st-trace-schedule gedf_m$1_p$2_d$3_$4_u$5 &
 release_ts &
 wait
 ./st.sh gedf_m$1_p$2_d$3_$4_u$5
-st-job-stats -S *.bin >> result_m$1_p$2_d$3_u$5.txt
+st-job-stats -S *.bin >> result.txt
 
 # cd $ST_DIR/cgedf
 # ./clean.sh
