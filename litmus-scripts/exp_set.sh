@@ -16,6 +16,6 @@ cd $EXP_DIR
 for u in $(seq 0.1 0.1 1)
 do
   # ./exp.sh $1 1 $2 $iteration $u
-  # ./exp.sh $1 4 $2 $iteration $u
+  #./exp.sh $1 4 $2 $iteration $u
   ./exp.sh $1 8 $2 $iteration $u
 done
