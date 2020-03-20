@@ -7,9 +7,7 @@ ST_DIR=$EXP_DIR/st
 cd $EXP_DIR
 
 python task_gen_vary_utilization.py $1 $2 $3 $5
-
 gap=`expr 5 + $3 / 1000`
-echo $gap
 
 cd $ST_DIR
 cd $ST_DIR/gedf
