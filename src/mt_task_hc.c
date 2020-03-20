@@ -61,9 +61,9 @@ typedef struct shared_resource {
 /* The information passed to each thread. Could be anything. */
 struct thread_context {
 	int id;
-  long sub_wcet;
-	long period;
-	long deadline;
+  double sub_wcet;
+	double period;
+	double deadline;
 	long iteration;
 	int cpd;
 	int partition;
@@ -82,9 +82,9 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
-void loop_ms(long ms);
-void loop_us(long us);
-void loop_ns(long ns);
+void loop_ms(double ms);
+void loop_us(double us);
+void loop_ns(double ns);
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -116,8 +116,8 @@ int main(int argc, char** argv)
 	shared_resource 			sr;
 
 	/* The task is in background mode upon startup. */		
-  long	wcet, sub_wcet, period, deadline, parallel_degree, constrained_pd, iteration, duration, partition;
-	double utilization;
+  long	parallel_degree, constrained_pd, iteration, duration, partition;
+	double wcet, sub_wcet, period, deadline, utilization;
 
 	wcet = 10;
 	period = 100;
@@ -145,9 +145,9 @@ int main(int argc, char** argv)
 			else if (0 == strcmp(argv[arg], "-u"))
 				utilization = atof(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-p"))
-				period = ms2ns(atoi(argv[++arg]));
+				period = ms2ns(atof(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-d"))
-				deadline = ms2ns(atoi(argv[++arg]));
+				deadline = ms2ns(atof(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-m"))
 				parallel_degree = atoi(argv[++arg]);
 			// else if (0 == strcmp(argv[arg], "-c"))
@@ -183,7 +183,7 @@ int main(int argc, char** argv)
 	 */
 	
 	sub_wcet = wcet / parallel_degree;
-	printf("wcet: %d, sub_wcet: %d\n", wcet, sub_wcet);
+	printf("wcet: %f ns (%f ms), sub_wcet: %f ns (%f ms)\n", wcet, ns2ms(wcet), sub_wcet, ns2ms(sub_wcet));
 
 	assert(sub_wcet > 0);
 	assert(wcet >= sub_wcet);
