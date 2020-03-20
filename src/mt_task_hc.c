@@ -337,7 +337,7 @@ static int loop_ms(double ms) {
 
 static int loop_us(double us) {
 	int tmp = 0;
-	double count = cycles_ms * us2ms(us);
+	double count = cycles_ms * us / 1000;
 	tmp += loop(count);
 	// long n = 0;
 	// long iteration = us * 267;
