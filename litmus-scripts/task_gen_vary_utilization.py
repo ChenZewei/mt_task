@@ -129,12 +129,12 @@ n = 2 * p_num
 u_ratio = float(sys.argv[4])
 ratio=1
 
-Periods = [1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 200, 250, 500, 1000, 2000]
+Periods = [10, 20, 25, 40, 50, 100, 200, 250, 500, 1000]
 
 # U=gen_randfixedsum(1, p_num, n)
 U=gen_randfixedsum_rescale(1, u_ratio * p_num / ratio, n, 0, ratio)
 T=[random.randint(100,1000) for _ in range(n)]
-index = [random.randint(0,15) for _ in range(n)]
+index = [random.randint(0,9) for _ in range(n)]
 
 
 
