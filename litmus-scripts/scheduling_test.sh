@@ -16,7 +16,7 @@ cd $EXP_DIR
 ./global_test.sh &
 sleep 5
 cd $ST_DIR/gedf
-sleep `expr 5 + $3` | st-trace-schedule gedf_m$1_p$2_d$3_$4_u$5 &
+sleep `expr 5 + $3/1000` | st-trace-schedule gedf_m$1_p$2_d$3_$4_u$5 &
 release_ts &
 wait
 ./st.sh gedf_m$1_p$2_d$3_$4_u$5
@@ -29,7 +29,7 @@ st-job-stats -S *.bin >> result.txt
 # ./global_test.sh &
 # sleep 5
 # cd $ST_DIR/cgedf
-# sleep `expr 5 + $3` | st-trace-schedule cgedf_m$1_p$2_d$3_$4_u$5 &
+# sleep `expr 5 + $3/1000` | st-trace-schedule cgedf_m$1_p$2_d$3_$4_u$5 &
 # release_ts &
 # wait
 # ./st.sh cgedf_m$1_p$2_d$3_$4_u$5
@@ -42,7 +42,7 @@ st-job-stats -S *.bin >> result.txt
 # ./global_test_hc.sh &
 # sleep 5
 # cd $ST_DIR/hc_cgedf
-# sleep `expr 5 + $3` | st-trace-schedule hc_cgedf_m$1_p$2_d$3_$4_u$5 &
+# sleep `expr 5 + $3/1000` | st-trace-schedule hc_cgedf_m$1_p$2_d$3_$4_u$5 &
 # release_ts &
 # wait
 # ./st.sh hc_cgedf_m$1_p$2_d$3_$4_u$5
