@@ -52,6 +52,7 @@ static void usage(char *error) {
 
 
 static int cycles_ms = 2400000;
+static int num[NUMS];
 
 typedef struct shared_resource {
 	int lock_od;
@@ -82,9 +83,9 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
-void loop_ms(double ms);
-void loop_us(double us);
-void loop_ns(double ns);
+static int loop_ms(double ms);
+static int loop_us(double us);
+static int loop_ns(double ns);
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -312,24 +313,44 @@ int job(void) {
 	return 0;
 }
 
-void loop_ms(double ms) {
-	long n = 0;
-	long iteration = ms * 267000;
-	while (++n < iteration) {}
-	return NULL;
+static noinline int loop(int count)
+{
+	int i, j = 0;
+	/* touch some numbers and do some math */
+	for (i = 0; i < count; i++) {
+		int index = i % NUMS;
+		j += num[index]++;
+		if (j > num[index])
+			num[index] = (j / 2) + 1;
+	}
+	return j;
 }
 
-void loop_us(double us) {
-	long n = 0;
-	long iteration = us * 267;
-	while (++n < iteration) {}
-	return NULL;
+static int loop_ms(double ms) {
+	int tmp = 0;
+	double count = cycles_ms * ms;
+	tmp += loop(count);
+	// long iteration = ms * 267000;
+	// while (++n < iteration) {}
+	return tmp;
 }
 
-void loop_ns(double ns) {
-	long n = 0;
-	long iteration = ns * 0.267;
-	while (++n < iteration) {}
-	return NULL;
+static int loop_us(double us) {
+	int tmp = 0;
+	double count = cycles_ms * us2ms(us);
+	tmp += loop(count);
+	// long n = 0;
+	// long iteration = us * 267;
+	// while (++n < iteration) {}
+	return tmp;
 }
 
+static int loop_ns(double ns) {
+	int tmp = 0;
+	double count = cycles_ms * ns2ms(ns);
+	tmp += loop(count);
+	// long n = 0;
+	// long iteration = ns * 0.267;
+	// while (++n < iteration) {}
+	return tmp;
+}
