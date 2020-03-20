@@ -1,4 +1,7 @@
 #!/bin/bash
+EXP_DIR=/home/ubuntu/exp
+FT_DIR=$EXP_DIR/ft
+ST_DIR=$EXP_DIR/st
 
 if [ "$#" -eq "5" ];
 then
@@ -19,6 +22,7 @@ for((i=0;i<$iteration;i++));
 do
   #echo $i
   # python task_gen_vary_utilization.py $m $p $d $norm_u
-  ./st_test.sh $m $p $d $i $norm_u
+  # ./st_test.sh $m $p $d $i $norm_u
   # ./ft_test.sh $m $p $d $i $norm_u
+  ./scheduling_test.sh $m $p $d $i $norm_u
 done
