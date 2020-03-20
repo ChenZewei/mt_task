@@ -177,8 +177,8 @@ int main(int argc, char** argv)
 	iteration = duration / period;
 	wcet = utilization * period;
 
-	printf("iteration: %d\n", iteration);
-	printf("utilization: %f\n", utilization);
+	// printf("iteration: %d\n", iteration);
+	// printf("utilization: %f\n", utilization);
        
 	/*****
 	 * 2) Work environment (e.g., global data structures, file data, etc.) would

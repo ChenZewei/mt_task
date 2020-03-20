@@ -84,6 +84,7 @@ int job(void);
 
 void loop_ms(long ms);
 void loop_us(long us);
+void loop_ns(long ns);
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -118,9 +119,9 @@ int main(int argc, char** argv)
   long	wcet, sub_wcet, period, deadline, parallel_degree, constrained_pd, iteration, duration, partition;
 	double utilization;
 
-	wcet = 10000;
-	period = 100000;
-	deadline = 100000;
+	wcet = 10;
+	period = 100;
+	deadline = 100;
 	parallel_degree = 4;
 	constrained_pd = parallel_degree;
 	duration = 1;
@@ -286,7 +287,7 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 		// non-critical section 1
-		loop_ns(ctx->sub_wcet/2);
+		loop_ms(ns2ms(ctx->sub_wcet/2));
 
 		// critical section
 		if (-1 != ctx->sr.lock_od) {
@@ -296,7 +297,7 @@ void* rt_thread(void *tcontext) {
 		}
 
 		// non-critical section 2
-		loop_ns(ctx->sub_wcet/2);
+		loop_ms(ns2ms(ctx->sub_wcet/2));
 		sleep_next_period();
 	}
 
@@ -325,9 +326,9 @@ void loop_us(long us) {
 	return NULL;
 }
 
-void loop_ns(long us) {
+void loop_ns(long ns) {
 	long n = 0;
-	long iteration = us * 0.4;
+	long iteration = ns * 0.4;
 	while (++n < iteration) {}
 	return NULL;
 }
