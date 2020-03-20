@@ -25,7 +25,7 @@ do
   # python task_gen_vary_utilization.py $m $p $d $norm_u
   # ./st_test.sh $m $p $d $i $norm_u
   # ./ft_test.sh $m $p $d $i $norm_u
-  ./exp.sh $m $p $duration $iteration
+  ./exp.sh $m $p $duration $i
 done
 
 
