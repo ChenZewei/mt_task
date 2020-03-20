@@ -15,7 +15,7 @@ cd $ST_DIR/gedf
 setsched GSN-EDF
 cd $EXP_DIR
 ./global_test.sh &
-sleep 5
+sleep 2
 cd $ST_DIR/gedf
 sleep $gap | st-trace-schedule gedf_m$1_p$2_d$3_u$5 &
 release_ts &
@@ -28,7 +28,7 @@ cd $ST_DIR/cgedf
 setsched CG-EDF
 cd $EXP_DIR
 ./global_test.sh &
-sleep 5
+sleep 2
 cd $ST_DIR/cgedf
 sleep $gap | st-trace-schedule cgedf_m$1_p$2_d$3_u$5 &
 release_ts &
@@ -41,7 +41,7 @@ cd $ST_DIR/hc_cgedf
 setsched CG-EDF
 cd $EXP_DIR
 ./global_test_hc.sh &
-sleep 5
+sleep 2
 cd $ST_DIR/hc_cgedf
 sleep $gap | st-trace-schedule hc_cgedf_m$1_p$2_d$3_u$5 &
 release_ts &
