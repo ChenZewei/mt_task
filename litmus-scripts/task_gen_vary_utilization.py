@@ -147,8 +147,8 @@ for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
 #   print(m)
-  g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
-  g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration))
+  g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
+  g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
   # g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
 g.close()
@@ -162,6 +162,6 @@ g2.close()
 p = open('./partitioned_test.sh', 'w')
 for i in range(n):
   pid = i % p_num
-  p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (T[i] * U[0][i], T[i], T[i], m, duration, pid))
+  p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], T[i], T[i], m, duration, pid))
 p.close()
 
