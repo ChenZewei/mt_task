@@ -51,7 +51,7 @@ static void usage(char *error) {
 }
 
 
-static int cycles_ms = 364206;
+static int cycles_ms = 2400000;
 static int num[NUMS];
 
 typedef struct shared_resource {
@@ -83,9 +83,13 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
+static noinline int loop(int count);
+static int loop_s(double s);
 static int loop_ms(double ms);
 static int loop_us(double us);
 static int loop_ns(double ns);
+
+#define loop_once() loop(NUMS)
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -326,10 +330,34 @@ static noinline int loop(int count)
 	return j;
 }
 
+static int loop_s(double s) {
+	int tmp = 0;
+	double last_loop = 0, loop_start;
+	double start = cputime();
+	double now = cputime();
+
+	while (now + last_loop < start + s) {
+		loop_start = now;
+		tmp += loop_once();
+		now = cputime();
+		last_loop = now - loop_start;
+	}
+	return tmp;
+}
+
 static int loop_ms(double ms) {
 	int tmp = 0;
-	double count = cycles_ms * ms;
-	tmp += loop(count);
+	double last_loop = 0, loop_start;
+	double start = cputime();
+	double now = cputime();
+
+	while (now + last_loop < start + (ms/1000)) {
+		loop_start = now;
+		tmp += loop_once();
+		now = cputime();
+		last_loop = now - loop_start;
+	}
+	return tmp;
 	// long iteration = ms * 267000;
 	// while (++n < iteration) {}
 	return tmp;
