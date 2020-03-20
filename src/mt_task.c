@@ -52,7 +52,7 @@ static void usage(char *error) {
 }
 
 
-static int cycles_ms = 2400000;
+static int cycles_ms = 4096;
 static int num[NUMS];
 
 typedef struct shared_resource {
