@@ -129,7 +129,7 @@ n = 2 * p_num
 u_ratio = float(sys.argv[4])
 ratio=1
 
-Periods = [1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 200, 250, 400, 500, 1000]
+Periods = [1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 200, 250, 500, 1000, 2000]
 
 # U=gen_randfixedsum(1, p_num, n)
 U=gen_randfixedsum_rescale(1, u_ratio * p_num / ratio, n, 0, ratio)
