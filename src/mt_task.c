@@ -116,14 +116,16 @@ int main(int argc, char** argv)
 
 	/* The task is in background mode upon startup. */		
   long	wcet, sub_wcet, period, deadline, parallel_degree, constrained_pd, iteration, duration, partition;
+	double utilization;
 
-	wcet = 10;
-	period = 100;
-	deadline = 100;
+	wcet = 10000;
+	period = 100000;
+	deadline = 100000;
 	parallel_degree = 4;
 	constrained_pd = parallel_degree;
 	duration = 1;
 	partition = MAX_INT;
+	utilization = 0.3;
 
 	/* locking */
 	int lock_od = -1;
@@ -139,18 +141,18 @@ int main(int argc, char** argv)
 		for (int arg = 1; arg < argc; arg++) {
 			if (0 == strcmp(argv[arg], "-a"))
 				cycles_ms = atoi(argv[++arg]);
-			else if (0 == strcmp(argv[arg], "-e"))
-				wcet = atoi(argv[++arg]);
+			else if (0 == strcmp(argv[arg], "-u"))
+				utilization = atof(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-p"))
-				period = atoi(argv[++arg]);
+				period = ms2ns(atoi(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-d"))
-				deadline = atoi(argv[++arg]);
+				deadline = ms2ns(atoi(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-m"))
 				parallel_degree = atoi(argv[++arg]);
 			// else if (0 == strcmp(argv[arg], "-c"))
 			// 	constrained_pd = atoi(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-t"))
-				duration = atoi(argv[++arg]); 
+				duration = ms2ns(atoi(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-P"))
         partition = atoi(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-L")) {
@@ -171,7 +173,10 @@ int main(int argc, char** argv)
 	}
 	assert(NUM_THREADS >= parallel_degree);
 
-	iteration = 1000 * duration / period;
+	iteration = duration / period;
+	wcet = utilization * period;
+
+	printf("utilization: %f\n", utilization);
        
 	/*****
 	 * 2) Work environment (e.g., global data structures, file data, etc.) would
@@ -263,9 +268,9 @@ void* rt_thread(void *tcontext) {
 	printf("RT Thread %d active. Workload:%d\n", ctx->id, ctx->sub_wcet);
 	
 	init_rt_task_param(&param);
-	param.exec_cost = ms2ns(ctx->sub_wcet);
-	param.period = ms2ns(ctx->period);
-	param.relative_deadline = ms2ns(ctx->deadline);
+	param.exec_cost = ctx->sub_wcet;
+	param.period = ctx->period;
+	param.relative_deadline = ctx->deadline;
 	param.constrained_parallel_degree = ctx->cpd;
 	
 
@@ -281,7 +286,7 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 		// non-critical section 1
-		loop_ms(ctx->sub_wcet/2);
+		loop_ns(ctx->sub_wcet/2);
 
 		// critical section
 		if (-1 != ctx->sr.lock_od) {
@@ -291,7 +296,7 @@ void* rt_thread(void *tcontext) {
 		}
 
 		// non-critical section 2
-		loop_ms(ctx->sub_wcet/2);
+		loop_ns(ctx->sub_wcet/2);
 		sleep_next_period();
 	}
 
@@ -320,3 +325,9 @@ void loop_us(long us) {
 	return NULL;
 }
 
+void loop_ns(long us) {
+	long n = 0;
+	long iteration = us * 0.4;
+	while (++n < iteration) {}
+	return NULL;
+}

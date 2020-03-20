@@ -33,13 +33,13 @@ release_ts &
 wait
 ./ft.sh cgedf_m$1_p$2_d$3_$4_u$5
 
-cd $FT_DIR/cgedf
+cd $FT_DIR/hc_cgedf
 ./clean.sh
 setsched CG-EDF
 cd $EXP_DIR
 ./global_test.sh &
 sleep 5
-cd $FT_DIR/cgedf
+cd $FT_DIR/hc_cgedf
 sleep `expr 5 + $3` | ft-trace-overheads hc_cgedf_m$1_p$2_d$3_$4_u$5 &
 release_ts &
 wait
