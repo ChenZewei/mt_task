@@ -28,9 +28,19 @@ do
 done
 
 cd $ST_DIR/gedf
-s=`grep "1" result.txt| wc -l`
-echo "scale=3;$s/$iteration" | bc >> ratio.txt
-rm result.txt
+s=`grep "1" result_m$m_p$p_d$d_u$norm_u.txt| wc -l`
+echo "scale=3;$s/$iteration" | bc >> gedf_ratio_m$m_p$p_d$d.txt
+rm result_m$m_p$p_d$d_u$norm_u.txt
+
+cd $ST_DIR/cgedf
+s=`grep "1" result_m$m_p$p_d$d_u$norm_u.txt| wc -l`
+echo "scale=3;$s/$iteration" | bc >> cgedf_ratio_m$m_p$p_d$d.txt
+rm result_m$m_p$p_d$d_u$norm_u.txt
+
+cd $ST_DIR/hc_cgedf
+s=`grep "1" result_m$m_p$p_d$d_u$norm_u.txt| wc -l`
+echo "scale=3;$s/$iteration" | bc >> hc_cgedf_ratio_m$m_p$p_d$d.txt
+rm result_m$m_p$p_d$d_u$norm_u.txt
 
 # cd $ST_DIR/cgedf
 # s=`grep "1" result.txt| wc -l`
