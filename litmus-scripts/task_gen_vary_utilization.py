@@ -118,15 +118,16 @@ def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
 #   print(U)
   return U
 
-print("argv:", len(sys.argv))
-print("argc:", str(sys.argv))
+# print("argv:", len(sys.argv))
+# print("argc:", str(sys.argv))
 
 # n = int(sys.argv[1])
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
 n = 3 * p_num
-u_ratio = float(sys.argv[4])
+id = int(sys.argv[4])
+u_ratio = float(sys.argv[5])
 ratio=1
 
 Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
@@ -137,12 +138,12 @@ T=[random.randint(100,1000) for _ in range(n)]
 index = [random.randint(0,10) for _ in range(n)]
 
 
-
-
 # print(T)
 # for global scheduling
-g = open('./global_test.sh', 'w')
-g2 = open('./global_test_hc.sh', 'w')
+file_name = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+g = open(file_name, 'w')
+# file_name = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+# g2 = open(file_name, 'w')
 for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
@@ -150,19 +151,20 @@ for i in range(n):
   # g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
   g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
-  g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
+  # g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
 g.close()
-g2.close()
+# g2.close()
 
 # for t in T:
   
 
 
 # for partitioned scheduling
-p = open('./partitioned_test.sh', 'w')
-for i in range(n):
-  pid = i % p_num
-  # p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], T[i], T[i], m, duration, pid))
-  p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration, pid))
-p.close()
+# file_name = './partitioned_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+# p = open(file_name, 'w')
+# for i in range(n):
+#   pid = i % p_num
+#   # p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], T[i], T[i], m, duration, pid))
+#   p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration, pid))
+# p.close()
 
