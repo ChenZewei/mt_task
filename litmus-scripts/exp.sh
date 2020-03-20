@@ -29,17 +29,17 @@ done
 
 cd $ST_DIR/gedf
 s=`grep "1" result.txt| wc -l`
-echo "scale=3;$s/$iteration" | bc >> gedf_ratio_m$m_p$p_d$d.txt
+echo "scale=3;$s/$iteration" | bc >> gedf_ratio_m$1_p$2_d$3.txt
 rm result.txt
 
 cd $ST_DIR/cgedf
 s=`grep "1" result.txt| wc -l`
-echo "scale=3;$s/$iteration" | bc >> cgedf_ratio_m$m_p$p_d$d.txt
+echo "scale=3;$s/$iteration" | bc >> cgedf_ratio_m$1_p$2_d$3.txt
 rm result.txt
 
 cd $ST_DIR/hc_cgedf
 s=`grep "1" result.txt| wc -l`
-echo "scale=3;$s/$iteration" | bc >> hc_cgedf_ratio_m$m_p$p_d$d.txt
+echo "scale=3;$s/$iteration" | bc >> hc_cgedf_ratio_m$1_p$2_d$3.txt
 rm result.txt
 
 # cd $ST_DIR/cgedf
