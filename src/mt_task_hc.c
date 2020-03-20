@@ -312,21 +312,21 @@ int job(void) {
 	return 0;
 }
 
-void loop_ms(long ms) {
+void loop_ms(double ms) {
 	long n = 0;
 	long iteration = ms * 400000;
 	while (++n < iteration) {}
 	return NULL;
 }
 
-void loop_us(long us) {
+void loop_us(double us) {
 	long n = 0;
 	long iteration = us * 400;
 	while (++n < iteration) {}
 	return NULL;
 }
 
-void loop_ns(long ns) {
+void loop_ns(double ns) {
 	long n = 0;
 	long iteration = ns * 0.4;
 	while (++n < iteration) {}
