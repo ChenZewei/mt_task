@@ -26,3 +26,18 @@ do
   # ./ft_test.sh $m $p $d $i $norm_u
   ./scheduling_test.sh $m $p $d $i $norm_u
 done
+
+cd $ST_DIR/gedf
+s=`grep "1" result.txt| wc -l`
+echo "scale=3;$s/$iteration" | bc >> ratio.txt
+rm result.txt
+
+# cd $ST_DIR/cgedf
+# s=`grep "1" result.txt| wc -l`
+# echo "scale=3;$s/$iteration" | bc >> ratio.txt
+# rm result.txt
+
+# cd $ST_DIR/hc_cgedf
+# s=`grep "1" result.txt| wc -l`
+# echo "scale=3;$s/$iteration" | bc >> ratio.txt
+# rm result.txt
