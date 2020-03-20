@@ -91,6 +91,7 @@ static int loop_ms(double ms);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
+#define loop_once() loop(NUMS)
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
