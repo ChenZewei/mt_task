@@ -6,7 +6,7 @@ ST_DIR=$EXP_DIR/st
 
 cd $EXP_DIR
 
-python task_gen_vary_utilization.py $1 $2 $3 $4 $5
+python task_gen_vary_utilization_random_period.py $1 $2 $3 $4 $5
 
 chmod +x global_$1_$2_$3_$4_$5.sh
 
