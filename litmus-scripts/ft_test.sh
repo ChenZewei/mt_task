@@ -18,7 +18,7 @@ cd $EXP_DIR
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $FT_DIR/gedf
-sleep `expr 5 + $3` | ft-trace-overheads gedf_$1_$2_$3_$4_$5 &
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads gedf_$1_$2_$3_$4_$5 &
 release_ts &
 wait
 ./ft.sh gedf_$1_$2_$3_$4_$5
@@ -30,7 +30,7 @@ cd $EXP_DIR
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $FT_DIR/cgedf
-sleep `expr 5 + $3` | ft-trace-overheads cgedf_m$1_p$2_d$3_$4_u$5 &
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgedf_$1_$2_$3_$4_$5 &
 release_ts &
 wait
 ./ft.sh cgedf_$1_$2_$3_$4_$5
@@ -43,7 +43,7 @@ cd $EXP_DIR
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $FT_DIR/gfp
-sleep `expr 5 + $3` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
 release_ts &
 wait
 ./ft.sh gfp_$1_$2_$3_$4_$5
@@ -55,7 +55,7 @@ cd $EXP_DIR
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $FT_DIR/cgfp
-sleep `expr 5 + $3` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &
 release_ts &
 wait
 ./ft.sh cgfp_$1_$2_$3_$4_$5
