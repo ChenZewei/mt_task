@@ -13,7 +13,7 @@ cd $ST_DIR
 cd $ST_DIR/gedf
 ./clean.sh
 setsched GSN-EDF
-cd $EXP_DIR/ft/tasksets
+cd $EXP_DIR/st/tasksets
 ./global_${1}_${2}_${3}_${4}_${5}.sh  &
 sleep 2
 cd $ST_DIR/gedf
@@ -26,7 +26,7 @@ st-job-stats -S *.bin >> result_m$1_p$2_d$3_u$5.txt
 cd $ST_DIR/cgedf
 ./clean.sh
 setsched CG-EDF
-cd $EXP_DIR/ft/tasksets
+cd $EXP_DIR/st/tasksets
 ./global_${1}_${2}_${3}_${4}_${5}.sh &
 sleep 2
 cd $ST_DIR/cgedf
@@ -39,8 +39,8 @@ st-job-stats -S *.bin >> result_m$1_p$2_d$3_u$5.txt
 # cd $ST_DIR/hc_cgedf
 # ./clean.sh
 # setsched CG-EDF
-# cd $EXP_DIR
-# ./global_test_hc.sh &
+# cd $EXP_DIR/st/tasksets
+# ./hc_global_${1}_${2}_${3}_${4}_${5}.sh &
 # sleep 2
 # cd $ST_DIR/hc_cgedf
 # sleep $gap | st-trace-schedule hc_cgedf_m$1_p$2_d$3_u$5 &
