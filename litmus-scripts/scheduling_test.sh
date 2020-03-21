@@ -7,13 +7,13 @@ ST_DIR=$EXP_DIR/st
 cd $EXP_DIR
 
 # python task_gen_vary_utilization.py $1 $2 $3 $5
-gap=`expr 5 + $3 / 1000`
+gap=`expr 2 + $3 / 1000`
 
 cd $ST_DIR
 cd $ST_DIR/gedf
 ./clean.sh
 setsched GSN-EDF
-cd $EXP_DIR
+cd $EXP_DIR/ft/tasksets
 ./global_${1}_${2}_${3}_${4}_${5}.sh  &
 sleep 2
 cd $ST_DIR/gedf
@@ -26,7 +26,7 @@ st-job-stats -S *.bin >> result_m$1_p$2_d$3_u$5.txt
 cd $ST_DIR/cgedf
 ./clean.sh
 setsched CG-EDF
-cd $EXP_DIR
+cd $EXP_DIR/ft/tasksets
 ./global_${1}_${2}_${3}_${4}_${5}.sh &
 sleep 2
 cd $ST_DIR/cgedf

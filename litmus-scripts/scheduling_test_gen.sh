@@ -15,7 +15,7 @@ iteration=$4
 mkdir tasksets
 cp task_gen_vary_utilization.py tasksets
 cd tasksets
-for norm_u in $(seq 0.1 0.1 1)
+for norm_u in $(seq 0.05 0.05 1)
 do
   for((i=1;i<=$iteration;i++));
   do
