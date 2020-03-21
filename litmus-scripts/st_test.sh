@@ -6,8 +6,8 @@ ST_DIR=$EXP_DIR/st
 
 cd $EXP_DIR
 
-python task_gen_vary_utilization.py $1 $2 $3 $4 $5
-# python task_gen_vary_utilization_random_period.py $1 $2 $3 $4 $5
+# python task_gen_vary_utilization.py $1 $2 $3 $4 $5
+python task_gen_vary_utilization_random_period.py $1 $2 $3 $4 $5
 
 chmod +x global_$1_$2_$3_$4_$5.sh
 chmod +x hc_global_$1_$2_$3_$4_$5.sh
@@ -36,6 +36,31 @@ sleep `expr 5 + $3 / 1000` | st-trace-schedule cgedf_m$1_p$2_d$3_$4_u$5 &
 release_ts &
 wait
 ./st.sh cgedf_m$1_p$2_d$3_$4_u$5
+
+cd $ST_DIR
+cd $ST_DIR/gfp
+./clean.sh
+setsched GFP
+cd $EXP_DIR
+./global_$1_$2_$3_$4_$5.sh &
+sleep 5
+cd $ST_DIR/gfp
+sleep `expr 5 + $3 / 1000` | st-trace-schedule gfp_m$1_p$2_d$3_$4_u$5 &
+release_ts &
+wait
+./st.sh gfp_m$1_p$2_d$3_$4_u$5
+
+cd $ST_DIR/cgfp
+./clean.sh
+setsched CG-FP
+cd $EXP_DIR
+./global_$1_$2_$3_$4_$5.sh &
+sleep 5
+cd $ST_DIR/cgfp
+sleep `expr 5 + $3 / 1000` | st-trace-schedule cgfp_m$1_p$2_d$3_$4_u$5 &
+release_ts &
+wait
+./st.sh cgfp_m$1_p$2_d$3_$4_u$5
 
 # cd $ST_DIR/hc_cgedf
 # ./clean.sh
