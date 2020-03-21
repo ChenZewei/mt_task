@@ -12,17 +12,17 @@ p=$2
 duration=$3
 iteration=$4
 
-setsched GSN-EDF
+setsched CG-EDF
 
-gap=`expr 5 + $duration / 1000`
+gap=`expr 3 + $duration / 1000`
 gap=`expr $iteration \* $gap`
 
 for norm_u in $(seq 0.1 0.1 1)
 do
-  sleep $gap | st-trace-schedule gedf_m$1_p$2_d$3_u$5 &
+  sleep $gap | st-trace-schedule cgedf_m$1_p$2_d$3_u$5 &
   for((i=1;i<=$iteration;i++));
   do
-    ../tasksets/global_${m}_${p}_${duration}_${i}_${norm_u}.sh
+    ../tasksets/global_${m}_${p}_${duration}_${i}_${norm_u}.sh 
     release_ts
     sleep 3
   done
