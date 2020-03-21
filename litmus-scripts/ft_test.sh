@@ -36,18 +36,18 @@ release_ts &
 wait
 ./ft.sh cgedf_$1_$2_$3_$4_$5
 
-# cd $FT_DIR
-# cd $FT_DIR/gfp
-# ./clean.sh
-# setsched GFP
-# cd $EXP_DIR
-# ./global_$1_$2_$3_$4_$5.sh &
-# sleep 5
-# cd $FT_DIR/gfp
-# sleep `expr 5 + $3 / 1000` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
-# release_ts &
-# wait
-# ./ft.sh gfp_$1_$2_$3_$4_$5
+cd $FT_DIR
+cd $FT_DIR/gfp
+./clean.sh
+setsched GFP
+cd $EXP_DIR
+./global_$1_$2_$3_$4_$5.sh &
+sleep 5
+cd $FT_DIR/gfp
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
+release_ts &
+wait
+./ft.sh gfp_$1_$2_$3_$4_$5
 
 cd $FT_DIR/cgfp
 ./clean.sh
