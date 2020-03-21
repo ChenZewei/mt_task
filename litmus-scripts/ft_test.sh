@@ -49,17 +49,17 @@ wait
 # wait
 # ./ft.sh gfp_$1_$2_$3_$4_$5
 
-# cd $FT_DIR/cgfp
-# ./clean.sh
-# setsched CG-FP
-# cd $EXP_DIR
-# ./global_$1_$2_$3_$4_$5.sh &
-# sleep 5
-# cd $FT_DIR/cgfp
-# sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &
-# release_ts &
-# wait
-# ./ft.sh cgfp_$1_$2_$3_$4_$5
+cd $FT_DIR/cgfp
+./clean.sh
+setsched CG-FP
+cd $EXP_DIR
+./global_$1_$2_$3_$4_$5.sh &
+sleep 5
+cd $FT_DIR/cgfp
+sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &
+release_ts &
+wait
+./ft.sh cgfp_$1_$2_$3_$4_$5
 
 # cd $FT_DIR/hc_cgedf
 # ./clean.sh
