@@ -137,6 +137,7 @@ U=gen_randfixedsum_rescale(1, u_ratio * p_num / ratio, n, 0, ratio)
 T=[random.randint(100,1000) for _ in range(n)]
 # index = [random.randint(0,10) for _ in range(n)]
 
+T.sort()
 
 # print(T)
 # for global scheduling
@@ -148,10 +149,10 @@ for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
 #   print(m)
-  g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
-  g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], m, duration))
-#   g.write('./mt_task -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], m, duration))
+  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], (i+1), m, duration))
+  g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], (i+1), m, duration))
+#   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], (i+1), m, duration))
+  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], (i+1), m, duration))
 g.close()
 g2.close()
 
