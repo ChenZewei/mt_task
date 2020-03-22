@@ -67,6 +67,7 @@ struct thread_context {
   double sub_wcet;
 	double period;
 	double deadline;
+	int priority;
 	long iteration;
 	int cpd;
 	int partition;
@@ -123,8 +124,15 @@ int main(int argc, char** argv)
 	shared_resource 			sr;
 
 	/* The task is in background mode upon startup. */		
-  long parallel_degree, constrained_pd, iteration, duration, partition;
+  long parallel_degree, constrained_pd, iteration, duration, partition, priority;
 	double wcet, sub_wcet, period, deadline, utilization;
+
+	/* locking */
+	int lock_od = -1;
+	int resource_id = 0;
+	const char *lock_namespace = "./mt_task-locks";
+	int protocol = -1;
+	double cs_length = 1; /* microsecond */
 
 	wcet = 10;
 	period = 100;
@@ -134,13 +142,7 @@ int main(int argc, char** argv)
 	duration = 1;
 	partition = MAX_INT;
 	utilization = 0.3;
-
-	/* locking */
-	int lock_od = -1;
-	int resource_id = 0;
-	const char *lock_namespace = "./mt_task-locks";
-	int protocol = -1;
-	double cs_length = 1; /* microsecond */
+	priority = LITMUS_LOWEST_PRIORITY;
 
 	/*****
 	 * 1) Command line paramter parsing would be done here.
@@ -155,7 +157,11 @@ int main(int argc, char** argv)
 				period = ms2ns(atof(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-d"))
 				deadline = ms2ns(atof(argv[++arg]));
-			else if (0 == strcmp(argv[arg], "-m"))
+			else if (0 == strcmp(argv[arg], "-q")) {
+				priority = atoi(argv[++arg]);
+				if (!litmus_is_valid_fixed_prio(priority))
+					priority = LITMUS_LOWEST_PRIORITY;
+			} else if (0 == strcmp(argv[arg], "-m"))
 				parallel_degree = atoi(argv[++arg]);
 			// else if (0 == strcmp(argv[arg], "-c"))
 			// 	constrained_pd = atoi(argv[++arg]);
@@ -243,6 +249,7 @@ int main(int argc, char** argv)
 		ctx[i].sub_wcet = sub_wcet;
 		ctx[i].period = period;
 		ctx[i].deadline = deadline;
+		ctx[i].priority = priority;
 		ctx[i].iteration = iteration;
 		ctx[i].cpd = constrained_pd;
 		ctx[i].partition = partition;
@@ -281,9 +288,8 @@ void* rt_thread(void *tcontext) {
 	param.period = ctx->period;
 	param.relative_deadline = ctx->deadline;
 	param.constrained_parallel_degree = ctx->cpd;
+	param.priority = ctx->priority;
 	
-
-	// param.priority = LITMUS_LOWEST_PRIORITY;
 	
 	if (MAX_INT != ctx->partition) {
 		param.cpu = domain_to_first_cpu(ctx->partition);
