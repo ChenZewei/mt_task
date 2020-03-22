@@ -278,7 +278,9 @@ void* rt_thread(void *tcontext) {
 	struct thread_context *ctx = (struct thread_context *) tcontext;
 	
 	/* Make presence visible. */
-	printf("RT Thread %d active. Workload:%d\n", ctx->id, ctx->sub_wcet);
+	printf("RT Thread [%d] active.\n", ctx->id, ctx->sub_wcet);
+	if (ctx->priority != LITMUS_LOWEST_PRIORITY)
+		printf("priority: %d.\n", ctx->priority);
 	
 	init_rt_task_param(&param);
 	param.exec_cost = ctx->sub_wcet;
