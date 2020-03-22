@@ -249,7 +249,7 @@ int main(int argc, char** argv)
 		ctx[i].sub_wcet = sub_wcet;
 		ctx[i].period = period;
 		ctx[i].deadline = deadline;
-		ctx[i].priority = priority;
+		ctx[i].priority = priority + i;
 		ctx[i].iteration = iteration;
 		ctx[i].cpd = constrained_pd;
 		ctx[i].partition = partition;
