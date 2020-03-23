@@ -14,7 +14,7 @@ iteration=$4
 
 setsched CG-FP
 
-gap=`expr 5 + $duration / 1000`
+gap=`expr 8 + $duration / 1000`
 gap=`expr $iteration \* $gap`
 
 for norm_u in $(seq 0.1 0.1 1)
@@ -23,7 +23,7 @@ do
   for((i=1;i<=$iteration;i++));
   do
     ../tasksets/global_${m}_${p}_${duration}_${i}_${norm_u}.sh &
-    sleep 2
+    sleep 3
     release_ts &
     sleep `expr 3 + $duration / 1000`
   done
