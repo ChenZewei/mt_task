@@ -249,7 +249,7 @@ int main(int argc, char** argv)
 		ctx[i].sub_wcet = sub_wcet;
 		ctx[i].period = period;
 		ctx[i].deadline = deadline;
-		ctx[i].priority = priority + i;
+		ctx[i].priority = priority;
 		ctx[i].iteration = iteration;
 		ctx[i].cpd = constrained_pd;
 		ctx[i].partition = partition;
@@ -282,8 +282,8 @@ void* rt_thread(void *tcontext) {
 	
 	/* Make presence visible. */
 	printf("RT Thread [%d] active.\n", ctx->id, ctx->sub_wcet);
-	if (ctx->priority != LITMUS_LOWEST_PRIORITY)
-		printf("priority: %d.\n", ctx->priority);
+	// if (ctx->priority != LITMUS_LOWEST_PRIORITY)
+	// 	printf("priority: %d.\n", ctx->priority);
 	
 	init_rt_task_param(&param);
 	param.exec_cost = ctx->sub_wcet;
