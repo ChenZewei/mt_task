@@ -206,8 +206,7 @@ int main(int argc, char** argv)
 
 	assert(constrained_pd > 0);
 
-	//constrained_pd = constrained_pd * 2;
-	constrained_pd = 8;
+	constrained_pd = constrained_pd * 2;
 
 	printf("constrained parallel degree:%d\n", constrained_pd);
 
