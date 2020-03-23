@@ -39,7 +39,7 @@ wait
 cd $FT_DIR
 cd $FT_DIR/gfp
 ./clean.sh
-setsched GFP
+setsched G-FP
 cd $EXP_DIR
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
