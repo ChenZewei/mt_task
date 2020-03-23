@@ -27,5 +27,5 @@ do
     sleep 3
   done
   wait
-  st-job-stats -s *.bin > result_${m}_${p}_${duration}_${norm_u}.txt
+  st-job-stats -s *.bin > gedf_result_${m}_${p}_${duration}_${norm_u}.txt
 done
