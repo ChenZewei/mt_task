@@ -14,7 +14,7 @@ iteration=$4
 
 setsched G-FP
 
-gap=`expr 5 + $duration / 1000`
+gap=`expr 3 + $duration / 1000`
 gap=`expr $iteration \* $gap`
 
 for norm_u in $(seq 0.1 0.1 1)
@@ -24,7 +24,7 @@ do
   do
     ../tasksets/global_${m}_${p}_${duration}_${i}_${norm_u}.sh
     release_ts
-    sleep 3
+    sleep `expr 3 + $duration / 1000`
   done
   wait
   st-job-stats -s *.bin > gfp_result_${m}_${p}_${duration}_${norm_u}.txt

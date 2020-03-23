@@ -24,7 +24,7 @@ do
   do
     ../tasksets/global_${m}_${p}_${duration}_${i}_${norm_u}.sh 
     release_ts
-    sleep 3
+    sleep `expr 3 + $duration / 1000`
   done
   wait
   st-job-stats -s *.bin > cgedf_result_${m}_${p}_${duration}_${norm_u}.txt
