@@ -125,7 +125,7 @@ def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
-n = 3 * p_num
+n = 1 * p_num
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 ratio=2
