@@ -17,7 +17,8 @@ for u in $(seq 0.05 0.05 1)
 do
   # ./exp.sh $1 1 $2 $iteration $u
   #./exp.sh $1 4 $2 $iteration $u 
-  ./scheduling_test.sh $m $p $duration $iteration $u
+  # ./scheduling_test.sh $m $p $duration $iteration $u
+  ./st_test.sh $m $p $duration $iteration $u
 done
 
 cd $ST_DIR/gedf
