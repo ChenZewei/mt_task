@@ -2,8 +2,8 @@
 EXP_DIR=/home/ubuntu/exp
 FT_DIR=$EXP_DIR/ft
 ST_DIR=$EXP_DIR/st
-GEN_SCRIPT=task_gen_vary_utilization.py
-# GEN_SCRIPT=task_gen_vary_utilization_random_period.py
+# GEN_SCRIPT=task_gen_vary_utilization.py
+GEN_SCRIPT=task_gen_vary_utilization_random_period.py
 CURR_DIR=`pwd`
 
 m=8
