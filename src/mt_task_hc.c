@@ -194,7 +194,7 @@ int main(int argc, char** argv)
 	 */
 	
 	sub_wcet = wcet / parallel_degree;
-	printf("wcet: %f ns (%f ms), sub_wcet: %f ns (%f ms)\n", wcet, ns2ms(wcet), sub_wcet, ns2ms(sub_wcet));
+	// printf("wcet: %f ns (%f ms), sub_wcet: %f ns (%f ms)\n", wcet, ns2ms(wcet), sub_wcet, ns2ms(sub_wcet));
 
 	assert(sub_wcet > 0);
 	assert(wcet >= sub_wcet);
@@ -204,11 +204,11 @@ int main(int argc, char** argv)
 	else
 		constrained_pd = 1;
 
-	assert(constrained_pd > 0);
-
 	constrained_pd = constrained_pd * 2;
 
-	printf("constrained parallel degree:%d\n", constrained_pd);
+	// constrained_pd = ceiling(priority, 3);
+
+	assert(constrained_pd > 0);
 
 	if (protocol >= 0) {
 		/* open reference to semaphore */

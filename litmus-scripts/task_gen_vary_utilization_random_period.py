@@ -128,12 +128,12 @@ duration = int(sys.argv[3])
 n = 3 * p_num
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
-ratio=1
+ratio=2
 
 Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
 
 # U=gen_randfixedsum(1, p_num, n)
-U=gen_randfixedsum_rescale(1, u_ratio * p_num / ratio, n, 0, ratio)
+U=gen_randfixedsum_rescale(1, u_ratio * p_num / (ratio - 0.1), n, 0.1, ratio)
 T=[random.randint(100,1000) for _ in range(n)]
 # index = [random.randint(0,10) for _ in range(n)]
 
@@ -143,19 +143,19 @@ T.sort()
 # for global scheduling
 file_name_1 = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
-# file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
-# g2 = open(file_name_2, 'w')
+file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+g2 = open(file_name_2, 'w')
 for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
   priority = 1 + i;
 #   print(m)
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
+  g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
 #   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
 g.close()
-# g2.close()
+g2.close()
 
 # for t in T:
   
@@ -172,5 +172,5 @@ g.close()
 # p.close()
 
 os.chmod(file_name_1, stat.S_IRWXU)
-# os.chmod(file_name_2, stat.S_IRWXU)
+os.chmod(file_name_2, stat.S_IRWXU)
 # os.chmod(file_name_3, stat.S_IRWXU)
