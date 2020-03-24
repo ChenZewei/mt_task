@@ -204,12 +204,17 @@ int main(int argc, char** argv)
 	assert(sub_wcet > 0);
 	assert(wcet >= sub_wcet);
 
-	if (wcet > sub_wcet)
-		constrained_pd = ceiling(wcet - sub_wcet, deadline - sub_wcet);
-	else
-		constrained_pd = 1;
+	// if (wcet > sub_wcet)
+	// 	constrained_pd = ceiling(wcet - sub_wcet, deadline - sub_wcet);
+	// else
+	// 	constrained_pd = 1;
+
+
+	constrained_pd = ceiling(priority, 3);
 
 	assert(constrained_pd > 0);
+
+
 
 	printf("constrained parallel degree:%d\n", constrained_pd);
 
