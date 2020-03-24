@@ -149,7 +149,7 @@ g2 = open(file_name_2, 'w')
 for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
-  priority = 1 + m * i;
+  priority = 1 + i;
 #   print(m)
   # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
