@@ -2,8 +2,8 @@
 EXP_DIR=/home/ubuntu/exp
 FT_DIR=$EXP_DIR/ft
 ST_DIR=$EXP_DIR/st
-# GEN_SCRIPT=task_gen_vary_utilization.py
-GEN_SCRIPT=task_gen_vary_utilization_random_period.py
+GEN_SCRIPT=task_gen_vary_utilization.py
+# GEN_SCRIPT=task_gen_vary_utilization_random_period.py
 CURR_DIR=`pwd`
 
 m=8
@@ -18,7 +18,7 @@ iteration=$4
 mkdir $ST_DIR/tasksets
 cp $GEN_SCRIPT $ST_DIR/tasksets
 cd $ST_DIR/tasksets
-for norm_u in $(seq 0.1 0.1 1)
+for norm_u in $(seq 0.2 0.1 0.8)
 do
   for((i=1;i<=$iteration;i++));
   do

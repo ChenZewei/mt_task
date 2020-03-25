@@ -12,8 +12,10 @@ p=$2
 duration=$3
 iteration=$4
 
+U=[0.2, 0.3, 0.5, 0.8, 1]
 
-for u in $(seq 0.1 0.1 1)
+# for u in $(seq 0.1 0.1 1)
+for u in $(seq 0.2 0.1 0.8)
 do
   # ./exp.sh $1 1 $2 $iteration $u
   #./exp.sh $1 4 $2 $iteration $u 
