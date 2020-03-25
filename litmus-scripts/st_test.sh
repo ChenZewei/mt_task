@@ -21,11 +21,12 @@ cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $ST_DIR/gedf
-sleep `expr 10 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
-sleep 5
+sleep `expr 5 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > gedf_$1_$2_$3_$4_$5.txt
+st-job-stats -S *.bin >> gedf_ratio_$1_$2_$3_$5.txt
 # ./st.sh gedf_$1_$2_$3_$4_$5
 
 cd $ST_DIR/cgedf
@@ -35,11 +36,12 @@ cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $ST_DIR/cgedf
-sleep `expr 10 + $3 / 1000` | st-trace-schedule cgedf_$1_$2_$3_$4_$5 &
-sleep 5
+sleep `expr 5 + $3 / 1000` | st-trace-schedule cgedf_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > cgedf_$1_$2_$3_$4_$5.txt
+st-job-stats -S *.bin >> cgedf_ratio_$1_$2_$3_$5.txt
 # ./st.sh cgedf_$1_$2_$3_$4_$5
 
 cd $ST_DIR
@@ -50,11 +52,12 @@ cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $ST_DIR/gfp
-sleep `expr 10 + $3 / 1000` | st-trace-schedule gfp_$1_$2_$3_$4_$5 &
-sleep 5
+sleep `expr 5 + $3 / 1000` | st-trace-schedule gfp_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > gfp_$1_$2_$3_$4_$5.txt
+st-job-stats -S *.bin >> gfp_ratio_$1_$2_$3_$5.txt
 # ./st.sh gfp_$1_$2_$3_$4_$5
 
 cd $ST_DIR/cgfp
@@ -64,11 +67,12 @@ cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
 sleep 5
 cd $ST_DIR/cgfp
-sleep `expr 10 + $3 / 1000` | st-trace-schedule cgfp_$1_$2_$3_$4_$5 &
-sleep 5
+sleep `expr 5 + $3 / 1000` | st-trace-schedule cgfp_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > cgfp_$1_$2_$3_$4_$5.txt
+st-job-stats -S *.bin >> cgfp_ratio_$1_$2_$3_$5.txt
 # ./st.sh cgfp_$1_$2_$3_$4_$5
 
 # cd $ST_DIR/hc_cgedf
