@@ -30,7 +30,6 @@
 #define MAX_INT 					0xffffffff
 #define NUMS 4096
 
-
 /* Let's create 10 threads in the example, 
  * for a total utilization of 1.
  */
@@ -53,7 +52,6 @@ static void usage(char *error) {
 
 static int cycles_ms = 2400000;
 static int num[NUMS];
-
 
 typedef struct shared_resource {
 	int lock_od;
@@ -188,10 +186,7 @@ int main(int argc, char** argv)
 
 	iteration = duration / period;
 	wcet = utilization * period;
-
-	// printf("iteration: %d\n", iteration);
-	// printf("utilization: %f\n", utilization);
-       
+  
 	/*****
 	 * 2) Work environment (e.g., global data structures, file data, etc.) would
 	 *    be setup here.
@@ -302,7 +297,6 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 		// non-critical section 1
-		// loop_ns(ctx->sub_wcet/2);
 		loop_ms(ns2ms(ctx->sub_wcet/2));
 
 		// critical section

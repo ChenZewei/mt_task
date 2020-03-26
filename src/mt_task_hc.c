@@ -43,8 +43,7 @@ static void usage(char *error) {
 	if (error)
 		fprintf(stderr, "Error: %s\n\n", error);
 	else {
-		fprintf(stderr, "rtspin: simulate a periodic or sporadic "
-		                "CPU-bound real-time task\n\n");
+		fprintf(stderr, "\n");
 	}
 	fprintf(stderr, "%s", usage_msg);
 	exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
@@ -122,7 +121,7 @@ int main(int argc, char** argv)
 	shared_resource 			sr;
 
 	/* The task is in background mode upon startup. */		
-  long	parallel_degree, constrained_pd, iteration, duration, partition, priority;
+  long parallel_degree, constrained_pd, iteration, duration, partition, priority;
 	double wcet, sub_wcet, period, deadline, utilization;
 
 	/* locking */
@@ -204,7 +203,7 @@ int main(int argc, char** argv)
 	else
 		constrained_pd = 1;
 
-	constrained_pd = constrained_pd * 2;
+	constrained_pd = constrained_pd * 4;
 
 	// constrained_pd = ceiling(priority, 3);
 
@@ -373,20 +372,16 @@ static int loop_ms(double ms) {
 
 static int loop_us(double us) {
 	int tmp = 0;
-	double count = cycles_ms * us / 1000;
-	tmp += loop(count);
-	// long n = 0;
-	// long iteration = us * 267;
-	// while (++n < iteration) {}
+	long iteration = us * 267;
+	while (++tmp < iteration) {}
 	return tmp;
 }
 
 static int loop_ns(double ns) {
 	int tmp = 0;
-	double count = cycles_ms * ns2ms(ns);
-	tmp += loop(count);
-	// long n = 0;
-	// long iteration = ns * 0.267;
-	// while (++n < iteration) {}
+	// double count = cycles_ms * ns2ms(ns);
+	// tmp += loop(count);
+	long iteration = ns * 0.267;
+	while (++tmp < iteration) {}
 	return tmp;
 }
