@@ -203,7 +203,7 @@ int main(int argc, char** argv)
 	else
 		constrained_pd = 1;
 
-	constrained_pd = constrained_pd * 4;
+	constrained_pd = constrained_pd * 2;
 
 	// constrained_pd = ceiling(priority, 3);
 
