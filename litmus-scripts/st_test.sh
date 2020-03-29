@@ -13,22 +13,22 @@ cd $EXP_DIR
 # chmod +x global_$1_$2_$3_$4_$5.sh
 # chmod +x hc_global_$1_$2_$3_$4_$5.sh
 
-# cd $ST_DIR
-# cd $ST_DIR/gedf
-# ./clean.sh
-# setsched GSN-EDF
-# cd $TSK_FLD
-# ./global_$1_$2_$3_$4_$5.sh &
-# sleep 5
-# cd $ST_DIR/gedf
-# sleep `expr 5 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
-# sleep 3
-# release_ts &
-# wait
-# st-job-stats -s *.bin > gedf_$1_$2_$3_$4_$5.txt
-# st-job-stats -S *.bin >> gedf_ratio_$1_$2_$3_$5.txt
-# st-job-stats -R *.bin >> gedf_details_$1_$2_$3_$5.csv
-# ./st.sh gedf_$1_$2_$3_$4_$5
+cd $ST_DIR
+cd $ST_DIR/gedf
+./clean.sh
+setsched GSN-EDF
+cd $TSK_FLD
+./global_$1_$2_$3_$4_$5.sh &
+sleep 5
+cd $ST_DIR/gedf
+sleep `expr 5 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
+sleep 3
+release_ts &
+wait
+st-job-stats -s *.bin > gedf_$1_$2_$3_$4_$5.txt
+st-job-stats -S *.bin >> gedf_result_$1_$2_$3_$5.txt
+st-job-stats -R *.bin >> gedf_details_$1_$2_$3_$5.csv
+./st.sh gedf_$1_$2_$3_$4_$5
 
 cd $ST_DIR/cgedf
 ./clean.sh
@@ -42,7 +42,7 @@ sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > cgedf_$1_$2_$3_$4_$5.txt
-st-job-stats -S *.bin >> cgedf_ratio_$1_$2_$3_$5.txt
+st-job-stats -S *.bin >> cgedf_result_$1_$2_$3_$5.txt
 st-job-stats -R *.bin >> cgedf_details_$1_$2_$3_$5.csv
 ./st.sh cgedf_$1_$2_$3_$4_$5
 
@@ -59,7 +59,7 @@ sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > gfp_$1_$2_$3_$4_$5.txt
-st-job-stats -S *.bin >> gfp_ratio_$1_$2_$3_$5.txt
+st-job-stats -S *.bin >> gfp_result_$1_$2_$3_$5.txt
 st-job-stats -R *.bin >> gfp_details_$1_$2_$3_$5.csv
 ./st.sh gfp_$1_$2_$3_$4_$5
 
@@ -75,7 +75,7 @@ sleep 3
 release_ts &
 wait
 st-job-stats -s *.bin > cgfp_$1_$2_$3_$4_$5.txt
-st-job-stats -S *.bin >> cgfp_ratio_$1_$2_$3_$5.txt
+st-job-stats -S *.bin >> cgfp_result_$1_$2_$3_$5.txt
 st-job-stats -R *.bin >> cgfp_details_$1_$2_$3_$5.csv
 ./st.sh cgfp_$1_$2_$3_$4_$5
 
@@ -92,7 +92,7 @@ st-job-stats -R *.bin >> cgfp_details_$1_$2_$3_$5.csv
 # release_ts &
 # wait
 # st-job-stats -s *.bin > hc_cgedf_$1_$2_$3_$4_$5.txt
-# st-job-stats -S *.bin >> hc_cgedf_ratio_$1_$2_$3_$5.txt
+# st-job-stats -S *.bin >> hc_cgedf_result_$1_$2_$3_$5.txt
 # st-job-stats -R *.bin >> hc_cgedf_details_$1_$2_$3_$5.csv
 # # ./st.sh cgedf_$1_$2_$3_$4_$5
 
@@ -108,5 +108,5 @@ st-job-stats -R *.bin >> cgfp_details_$1_$2_$3_$5.csv
 # release_ts &
 # wait
 # st-job-stats -s *.bin > hc_cgfp_$1_$2_$3_$4_$5.txt
-# st-job-stats -S *.bin >> hc_cgfp_ratio_$1_$2_$3_$5.txt
+# st-job-stats -S *.bin >> hc_cgfp_result_$1_$2_$3_$5.txt
 # st-job-stats -R *.bin >> hc_cgfp_details_$1_$2_$3_$5.csv
