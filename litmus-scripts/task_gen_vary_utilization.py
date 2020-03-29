@@ -40,8 +40,8 @@ def StaffordRandFixedSum(n, u, nsets):
     Please contact paule@rapitasystems.com or robdavis@cs.york.ac.uk if you have
     any questions regarding this software.
     """
-    if n < u:
-        return None
+    # if n < u:
+    #     return None
 
     #deal with n=1 case
     if n == 1:
@@ -125,7 +125,8 @@ def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
-n = 0.5 * p_num
+# n = 0.5 * p_num
+n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
