@@ -27,8 +27,8 @@ release_ts &
 wait
 st-job-stats -s *.bin > gedf_$1_$2_$3_$4_$5.txt
 st-job-stats -S *.bin >> gedf_result_$1_$2_$3_$5.txt
-st-job-stats -R *.bin >> gedf_details_$1_$2_$3_$5.csv
-./st.sh gedf_$1_$2_$3_$4_$5
+# st-job-stats -R *.bin >> gedf_details_$1_$2_$3_$5.csv
+# ./st.sh gedf_$1_$2_$3_$4_$5
 
 cd $ST_DIR/cgedf
 ./clean.sh
@@ -43,8 +43,8 @@ release_ts &
 wait
 st-job-stats -s *.bin > cgedf_$1_$2_$3_$4_$5.txt
 st-job-stats -S *.bin >> cgedf_result_$1_$2_$3_$5.txt
-st-job-stats -R *.bin >> cgedf_details_$1_$2_$3_$5.csv
-./st.sh cgedf_$1_$2_$3_$4_$5
+# st-job-stats -R *.bin >> cgedf_details_$1_$2_$3_$5.csv
+# ./st.sh cgedf_$1_$2_$3_$4_$5
 
 cd $ST_DIR
 cd $ST_DIR/gfp
@@ -60,8 +60,8 @@ release_ts &
 wait
 st-job-stats -s *.bin > gfp_$1_$2_$3_$4_$5.txt
 st-job-stats -S *.bin >> gfp_result_$1_$2_$3_$5.txt
-st-job-stats -R *.bin >> gfp_details_$1_$2_$3_$5.csv
-./st.sh gfp_$1_$2_$3_$4_$5
+# st-job-stats -R *.bin >> gfp_details_$1_$2_$3_$5.csv
+# ./st.sh gfp_$1_$2_$3_$4_$5
 
 cd $ST_DIR/cgfp
 ./clean.sh
@@ -76,8 +76,8 @@ release_ts &
 wait
 st-job-stats -s *.bin > cgfp_$1_$2_$3_$4_$5.txt
 st-job-stats -S *.bin >> cgfp_result_$1_$2_$3_$5.txt
-st-job-stats -R *.bin >> cgfp_details_$1_$2_$3_$5.csv
-./st.sh cgfp_$1_$2_$3_$4_$5
+# st-job-stats -R *.bin >> cgfp_details_$1_$2_$3_$5.csv
+# ./st.sh cgfp_$1_$2_$3_$4_$5
 
 
 # cd $ST_DIR/cgedf
