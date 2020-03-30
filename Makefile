@@ -1,6 +1,6 @@
 CC = gcc
 GG = g++
-CFLAGS = -D_GNU_SOURCE -pthread
+CFLAGS = -D_GNU_SOURCE -pthread -lm
 INCPATH = -I. -I./include -I/usr/include -I./include/asm
 LIB = 
 OBJ_FILES = clocks.o common.o kernel_iface.o litmus.o migration.o syscalls.o task.o
