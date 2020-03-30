@@ -215,7 +215,7 @@ int main(int argc, char** argv)
 
 	constrained_pd = ceil(utilization * 2.0);
 
-	printf("utilization: %f, constrained_pd: %f\n", utilization, constrained_pd);
+	printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
 
 
 	assert(constrained_pd > 0);
