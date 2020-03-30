@@ -128,8 +128,9 @@ int main(int argc, char** argv)
 	pthread_t             task[NUM_THREADS];
 	shared_resource 			sr;
 
-	/* The task is in background mode upon startup. */		
-  long parallel_degree, constrained_pd, iteration, duration, partition, priority;
+	/* The task is in background mode upon startup. */
+  long iteration, duration, partition, priority;
+	int parallel_degree, constrained_pd;
 	double wcet, sub_wcet, period, deadline, utilization, tmp;
 
 	/* locking */
