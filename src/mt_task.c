@@ -91,7 +91,7 @@ static int loop_ns(double ns);
 
 #define loop_once() loop(NUMS)
 
-int ceiling(double num) {
+int ceil(double num) {
 	int result = num;
 	if (result < num)
 		return result + 1;
@@ -213,7 +213,7 @@ int main(int argc, char** argv)
 
 	// constrained_pd = ceiling(priority, 3);
 
-	constrained_pd = ceiling(utilization * 2.0);
+	constrained_pd = ceil(utilization * 2.0);
 
 	printf("utilization: %f, constrained_pd: %f\n", utilization, constrained_pd);
 
