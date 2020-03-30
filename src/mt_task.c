@@ -9,7 +9,6 @@
  * with pthreads.
  */
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -91,6 +90,14 @@ static int loop_us(double us);
 static int loop_ns(double ns);
 
 #define loop_once() loop(NUMS)
+
+int ceiling(double num) {
+	int result = num;
+	if (result < num)
+		return result + 1;
+	else
+		return result;
+}
 
 int ceiling(int numer, int denom) {
 	if (0 == numer % denom)
@@ -206,7 +213,10 @@ int main(int argc, char** argv)
 
 	// constrained_pd = ceiling(priority, 3);
 
-	constrained_pd = ceil(utilization * 2.0);
+	constrained_pd = ceiling(utilization * 2.0);
+
+	printf("utilization: %f, constrained_pd: %f\n", utilization, constrained_pd);
+
 
 	assert(constrained_pd > 0);
 
