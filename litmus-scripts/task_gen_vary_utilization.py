@@ -152,14 +152,37 @@ g = open(file_name_1, 'w')
 # file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 # g2 = open(file_name_2, 'w')
 for i in range(n):
-  if (m < math.ceil(U[0][i])):
-    m = math.ceil(U[0][i])
+  lb_m=math.ceil(4*U[0][i])
+  # ub_m=math.floor(8*U[0][i])
+  ub_m=32
+
+  if (lb_m >= ub_m):
+    m=lb_m
+  else:
+    m=random.randint(lb_m,ub_m)
+
+  cpd=m
+  cpu=U[0][i]/m
+  
+  for cpd in range(int(m),0,-1):
+    # print("cpd:",cpd)
+    if(1 == cpd):
+      break
+    # print(math.ceil(float(m)/(cpd-1))*cpu)
+    if(0.25 < math.ceil(float(m)/(cpd-1))*cpu):
+      break
+  # print("parallel degree:", m)
+  # print("constrained parallel degree:", cpd)
+  # print("critical path utilization:", U[0][i]/m)
+  # print("constrained critical path utilization:", math.ceil(float(m)/cpd)*cpu)
+  # if (m < math.ceil(U[0][i])):
+  #   m = math.ceil(U[0][i])
   priority = 1 + i;
 #   print(m)
   # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
+  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
+  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
 g.close()
 # g2.close()
 
@@ -171,10 +194,25 @@ g.close()
 # file_name_3 = './partitioned_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 # p = open(file_name_3, 'w')
 # for i in range(n):
+  # b_m=math.ceil(4*U[0][i])
+  # # ub_m=math.floor(8*U[0][i])
+  # ub_m=32
+  
+  # if (lb_m >= ub_m):
+  #   m=lb_m
+  # else:
+  #   m=random.randint(lb_m,ub_m)
+  # cpd=m
+  # cpu=U[0][i]/m
+  # for cpd in range(int(m),0,-1):
+  #   if(1 == cpd):
+  #     break
+  #   if(0.25 < math.ceil(float(m)/(cpd-1))*cpu):
+  #     break
 #   pid = i % p_num
 #   priority = 1 + m *i;
-#   # p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], T[i], T[i], priority, m, duration, pid))
-#   p.write('./mt_task -u %f -p %d -d %d -m %d -t %d -P %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration, pid))
+#   # p.write('./mt_task -u %f -p %d -d %d -m %d -c %d -t %d -P %d &\n' % (U[0][i], T[i], T[i], priority, m, cpd, duration, pid))
+#   p.write('./mt_task -u %f -p %d -d %d -m %d -c %d -t %d -P %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration, pid))
 # p.close()
 
 

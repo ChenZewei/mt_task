@@ -144,7 +144,7 @@ int main(int argc, char** argv)
 	period = 100;
 	deadline = 100;
 	parallel_degree = 4;
-	constrained_pd = parallel_degree;
+	constrained_pd = 0;
 	duration = 1;
 	partition = MAX_INT;
 	utilization = 0.3;
@@ -169,8 +169,8 @@ int main(int argc, char** argv)
 					priority = LITMUS_LOWEST_PRIORITY;
 			} else if (0 == strcmp(argv[arg], "-m"))
 				parallel_degree = atoi(argv[++arg]);
-			// else if (0 == strcmp(argv[arg], "-c"))
-			// 	constrained_pd = atoi(argv[++arg]);
+			else if (0 == strcmp(argv[arg], "-c"))
+				constrained_pd = atoi(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-t"))
 				duration = ms2ns(atoi(argv[++arg]));
 			else if (0 == strcmp(argv[arg], "-P"))
@@ -214,12 +214,11 @@ int main(int argc, char** argv)
 
 	// constrained_pd = ceiling(priority, 3);
 
-	constrained_pd = ceil(utilization * 2.0);
-
-	printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
-
-
+	if (0 == constrained_pd) {
+		constrained_pd = ceil(utilization * 4.0);
+	}
 	assert(constrained_pd > 0);
+	printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
 
 	if (protocol >= 0) {
 		/* open reference to semaphore */
