@@ -3,23 +3,25 @@
 EXP_DIR=/home/ubuntu/exp
 FT_DIR=$EXP_DIR/ft
 ST_DIR=$EXP_DIR/st
+TSK_FLD=$EXP_DIR/tasksets
 
 cd $EXP_DIR
 
-python task_gen_vary_utilization_random_period.py $1 $2 $3 $4 $5
+# python task_gen_vary_utilization.py $1 $2 $3 $4 $5
 
-chmod +x global_$1_$2_$3_$4_$5.sh
-chmod +x hc_global_$1_$2_$3_$4_$5.sh
+# chmod +x global_$1_$2_$3_$4_$5.sh
+# chmod +x hc_global_$1_$2_$3_$4_$5.sh
 
 cd $FT_DIR
 cd $FT_DIR/gedf
 ./clean.sh
 setsched GSN-EDF
-cd $EXP_DIR
+cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 5
+sleep 1
 cd $FT_DIR/gedf
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads gedf_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 ./ft.sh gedf_$1_$2_$3_$4_$5
@@ -27,11 +29,12 @@ wait
 cd $FT_DIR/cgedf
 ./clean.sh
 setsched CG-EDF
-cd $EXP_DIR
+cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 5
+sleep 1
 cd $FT_DIR/cgedf
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgedf_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 ./ft.sh cgedf_$1_$2_$3_$4_$5
@@ -40,11 +43,12 @@ cd $FT_DIR
 cd $FT_DIR/gfp
 ./clean.sh
 setsched G-FP
-cd $EXP_DIR
+cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 5
+sleep 1
 cd $FT_DIR/gfp
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 ./ft.sh gfp_$1_$2_$3_$4_$5
@@ -52,11 +56,12 @@ wait
 cd $FT_DIR/cgfp
 ./clean.sh
 setsched CG-FP
-cd $EXP_DIR
+cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 5
+sleep 1
 cd $FT_DIR/cgfp
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &
+sleep 3
 release_ts &
 wait
 ./ft.sh cgfp_$1_$2_$3_$4_$5

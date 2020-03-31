@@ -3,7 +3,7 @@
 EXP_DIR=/home/ubuntu/exp
 FT_DIR=$EXP_DIR/ft
 ST_DIR=$EXP_DIR/st
-TSK_FLD=$EXP_DIR/st/tasksets
+TSK_FLD=$EXP_DIR/tasksets
 
 cd $EXP_DIR
 
