@@ -18,7 +18,7 @@ cd $ST_DIR/gedf
 ./clean.sh
 setsched GSN-EDF
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_edf_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $ST_DIR/gedf
 sleep `expr 3 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
@@ -34,7 +34,7 @@ cd $ST_DIR/cgedf
 ./clean.sh
 setsched CG-EDF
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_edf_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $ST_DIR/cgedf
 sleep `expr 3 + $3 / 1000` | st-trace-schedule cgedf_$1_$2_$3_$4_$5 &
@@ -51,7 +51,7 @@ cd $ST_DIR/gfp
 ./clean.sh
 setsched G-FP
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_fp_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $ST_DIR/gfp
 sleep `expr 3 + $3 / 1000` | st-trace-schedule gfp_$1_$2_$3_$4_$5 &
@@ -67,7 +67,7 @@ cd $ST_DIR/cgfp
 ./clean.sh
 setsched CG-FP
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_fp_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $ST_DIR/cgfp
 sleep `expr 3 + $3 / 1000` | st-trace-schedule cgfp_$1_$2_$3_$4_$5 &

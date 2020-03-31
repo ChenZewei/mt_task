@@ -17,7 +17,7 @@ cd $FT_DIR/gedf
 ./clean.sh
 setsched GSN-EDF
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_edf_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $FT_DIR/gedf
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads gedf_$1_$2_$3_$4_$5 &
@@ -30,7 +30,7 @@ cd $FT_DIR/cgedf
 ./clean.sh
 setsched CG-EDF
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_edf_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $FT_DIR/cgedf
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgedf_$1_$2_$3_$4_$5 &
@@ -44,7 +44,7 @@ cd $FT_DIR/gfp
 ./clean.sh
 setsched G-FP
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_fp_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $FT_DIR/gfp
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads gfp_$1_$2_$3_$4_$5 &
@@ -57,7 +57,7 @@ cd $FT_DIR/cgfp
 ./clean.sh
 setsched CG-FP
 cd $TSK_FLD
-./global_$1_$2_$3_$4_$5.sh &
+./global_fp_$1_$2_$3_$4_$5.sh &
 sleep 1
 cd $FT_DIR/cgfp
 sleep `expr 5 + $3 / 1000` | ft-trace-overheads cgfp_$1_$2_$3_$4_$5 &

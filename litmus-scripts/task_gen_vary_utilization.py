@@ -145,12 +145,19 @@ index = [random.randint(0,10) for _ in range(n)]
 
 index.sort()
 
+cab_edf=(3+math.sqrt(5))/2
+cab_fp=(4+math.sqrt(12))/2
+
+# print(1/cab_edf)
+# print(1/cab_fp)
+
+
 # print(index)
 # for global scheduling
-file_name_1 = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
-# file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
-# g2 = open(file_name_2, 'w')
+file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+g2 = open(file_name_2, 'w')
 for i in range(n):
   lb_m=math.ceil(4*U[0][i])
   # ub_m=math.floor(8*U[0][i])
@@ -161,30 +168,38 @@ for i in range(n):
   else:
     m=random.randint(lb_m,ub_m)
 
-  cpd=m
   cpu=U[0][i]/m
+
+  cpd_edf=m
+  cpd_fp=m
   
-  for cpd in range(int(m),0,-1):
-    # print("cpd:",cpd)
-    if(1 == cpd):
+  for cpd_edf in range(int(m),0,-1):
+    if(1 == cpd_edf):
       break
-    # print(math.ceil(float(m)/(cpd-1))*cpu)
-    if(0.25 < math.ceil(float(m)/(cpd-1))*cpu):
+    if((1/cab_edf) < math.ceil(float(m)/(cpd_edf-1))*cpu):
+      break
+
+  for cpd_fp in range(int(m),0,-1):
+    if(1 == cpd_fp):
+      break
+    if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
       break
   # print("parallel degree:", m)
-  # print("constrained parallel degree:", cpd)
+  # print("cgedf parallel degree:", cpd_edf)
+  # print("cgfp parallel degree:", cpd_fp)
   # print("critical path utilization:", U[0][i]/m)
-  # print("constrained critical path utilization:", math.ceil(float(m)/cpd)*cpu)
+  # print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
+  # print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
   # if (m < math.ceil(U[0][i])):
   #   m = math.ceil(U[0][i])
   priority = 1 + i;
 #   print(m)
   # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
+  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_edf, duration))
+  g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_fp, duration))
 g.close()
-# g2.close()
+g2.close()
 
 # for t in T:
   
@@ -217,5 +232,5 @@ g.close()
 
 
 os.chmod(file_name_1, stat.S_IRWXU)
-# os.chmod(file_name_2, stat.S_IRWXU)
+os.chmod(file_name_2, stat.S_IRWXU)
 # os.chmod(file_name_3, stat.S_IRWXU)
