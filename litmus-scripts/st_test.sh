@@ -19,10 +19,10 @@ cd $ST_DIR/gedf
 setsched GSN-EDF
 cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 2
+sleep 1
 cd $ST_DIR/gedf
-sleep `expr 4 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
-sleep 2
+sleep `expr 3 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
+sleep 1
 release_ts &
 wait
 st-job-stats -s *.bin > gedf_$1_$2_$3_$4_$5.txt
@@ -35,10 +35,10 @@ cd $ST_DIR/cgedf
 setsched CG-EDF
 cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 2
+sleep 1
 cd $ST_DIR/cgedf
-sleep `expr 4 + $3 / 1000` | st-trace-schedule cgedf_$1_$2_$3_$4_$5 &
-sleep 2
+sleep `expr 3 + $3 / 1000` | st-trace-schedule cgedf_$1_$2_$3_$4_$5 &
+sleep 1
 release_ts &
 wait
 st-job-stats -s *.bin > cgedf_$1_$2_$3_$4_$5.txt
@@ -52,10 +52,10 @@ cd $ST_DIR/gfp
 setsched G-FP
 cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 2
+sleep 1
 cd $ST_DIR/gfp
-sleep `expr 4 + $3 / 1000` | st-trace-schedule gfp_$1_$2_$3_$4_$5 &
-sleep 2
+sleep `expr 3 + $3 / 1000` | st-trace-schedule gfp_$1_$2_$3_$4_$5 &
+sleep 1
 release_ts &
 wait
 st-job-stats -s *.bin > gfp_$1_$2_$3_$4_$5.txt
@@ -68,10 +68,10 @@ cd $ST_DIR/cgfp
 setsched CG-FP
 cd $TSK_FLD
 ./global_$1_$2_$3_$4_$5.sh &
-sleep 2
+sleep 1
 cd $ST_DIR/cgfp
-sleep `expr 4 + $3 / 1000` | st-trace-schedule cgfp_$1_$2_$3_$4_$5 &
-sleep 2
+sleep `expr 3 + $3 / 1000` | st-trace-schedule cgfp_$1_$2_$3_$4_$5 &
+sleep 1
 release_ts &
 wait
 st-job-stats -s *.bin > cgfp_$1_$2_$3_$4_$5.txt
