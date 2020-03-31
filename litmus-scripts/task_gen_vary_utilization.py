@@ -126,11 +126,11 @@ p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
 # n = 0.5 * p_num
-n=8
+n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
-ub=2
+ub=4
 
 Periods = [1,2,4,5,8,10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
 # Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
