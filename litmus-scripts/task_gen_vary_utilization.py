@@ -149,8 +149,8 @@ index.sort()
 # for global scheduling
 file_name_1 = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
-file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
-g2 = open(file_name_2, 'w')
+# file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+# g2 = open(file_name_2, 'w')
 for i in range(n):
   if (m < math.ceil(U[0][i])):
     m = math.ceil(U[0][i])
@@ -159,9 +159,9 @@ for i in range(n):
   # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
-  g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
+  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
 g.close()
-g2.close()
+# g2.close()
 
 # for t in T:
   
@@ -179,5 +179,5 @@ g2.close()
 
 
 os.chmod(file_name_1, stat.S_IRWXU)
-os.chmod(file_name_2, stat.S_IRWXU)
+# os.chmod(file_name_2, stat.S_IRWXU)
 # os.chmod(file_name_3, stat.S_IRWXU)
