@@ -125,7 +125,7 @@ def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
-n=8
+n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
@@ -135,7 +135,7 @@ Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
 
 # U=gen_randfixedsum(1, p_num, n)
 U=gen_randfixedsum_rescale(1, (u_ratio * p_num - n * lb)/(ub - lb), n, lb, ub)
-T=[random.randint(1,100) for _ in range(n)]
+T=[random.randint(5,100) for _ in range(n)]
 # index = [random.randint(0,10) for _ in range(n)]
 
 T.sort()
