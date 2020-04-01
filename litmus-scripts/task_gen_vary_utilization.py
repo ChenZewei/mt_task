@@ -158,6 +158,7 @@ file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sy
 g = open(file_name_1, 'w')
 file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g2 = open(file_name_2, 'w')
+cpd_sum=0
 for i in range(n):
   lb_m=math.ceil(4*U[0][i])
   # ub_m=math.floor(8*U[0][i])
@@ -171,25 +172,36 @@ for i in range(n):
   cpu=U[0][i]/m
 
   cpd_edf=m
-  cpd_fp=m
-  
   for cpd_edf in range(int(m),0,-1):
     if(1 == cpd_edf):
       break
     if((1/cab_edf) < math.ceil(float(m)/(cpd_edf-1))*cpu):
       break
 
+  cpd_fp=m
   for cpd_fp in range(int(m),0,-1):
     if(1 == cpd_fp):
       break
     if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
       break
-  # print("parallel degree:", m)
-  # print("cgedf parallel degree:", cpd_edf)
-  # print("cgfp parallel degree:", cpd_fp)
-  # print("critical path utilization:", U[0][i]/m)
-  # print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
-  # print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
+
+  if(p_num >= (cpd_sum + math.ceil(U[0][i]))):
+    cpd_fp=math.ceil(U[0][i])
+    cpd_sum+=cpd_fp
+  else:
+    cpd_fp=m
+    for cpd_fp in range(int(m),0,-1):
+      if(1 == cpd_fp):
+        break
+      if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
+        break
+
+  print("parallel degree:", m)
+  print("cgedf parallel degree:", cpd_edf)
+  print("cgfp parallel degree:", cpd_fp)
+  print("critical path utilization:", U[0][i]/m)
+  print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
+  print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
   # if (m < math.ceil(U[0][i])):
   #   m = math.ceil(U[0][i])
   priority = 1 + i;
