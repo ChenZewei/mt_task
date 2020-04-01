@@ -160,14 +160,16 @@ file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys
 g2 = open(file_name_2, 'w')
 cpd_sum=0
 for i in range(n):
-  lb_m=math.ceil(4*U[0][i])
-  # ub_m=math.floor(8*U[0][i])
-  ub_m=32
+  # lb_m=math.ceil(4*U[0][i])
+  # # ub_m=math.floor(8*U[0][i])
+  # ub_m=32
 
-  if (lb_m >= ub_m):
-    m=lb_m
-  else:
-    m=random.randint(lb_m,ub_m)
+  # if (lb_m >= ub_m):
+  #   m=lb_m
+  # else:
+  #   m=random.randint(lb_m,ub_m)
+
+  m=p_num
 
   cpu=U[0][i]/m
 
