@@ -40,8 +40,8 @@ def StaffordRandFixedSum(n, u, nsets):
     Please contact paule@rapitasystems.com or robdavis@cs.york.ac.uk if you have
     any questions regarding this software.
     """
-    if n < u:
-        return None
+    # if n < u:
+    #     return None
 
     #deal with n=1 case
     if n == 1:
@@ -125,7 +125,7 @@ def gen_randfixedsum_rescale(nsets, u, n, l_bound, u_bound):
 p_num = int(sys.argv[1])
 m = int(sys.argv[2])
 duration = int(sys.argv[3])
-n = 1 * p_num
+n=8
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
@@ -135,32 +135,61 @@ Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
 
 # U=gen_randfixedsum(1, p_num, n)
 U=gen_randfixedsum_rescale(1, (u_ratio * p_num - n * lb)/(ub - lb), n, lb, ub)
-T=[random.randint(100,1000) for _ in range(n)]
+T=[random.randint(1,100) for _ in range(n)]
 # index = [random.randint(0,10) for _ in range(n)]
 
 T.sort()
 
-# print(T)
+
+cab_edf=(3+math.sqrt(5))/2
+cab_fp=(4+math.sqrt(12))/2
+
+
+# print(index)
 # for global scheduling
-file_name_1 = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
-file_name_2 = './hc_global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g2 = open(file_name_2, 'w')
+cpd_sum=0
 for i in range(n):
-  if (m < math.ceil(U[0][i])):
-    m = math.ceil(U[0][i])
+  # lb_m=math.ceil(4*U[0][i])
+  # # ub_m=math.floor(8*U[0][i])
+  # ub_m=32
+
+  # if (lb_m >= ub_m):
+  #   m=lb_m
+  # else:
+  #   m=random.randint(lb_m,ub_m)
+
+  m=p_num
+
+  cpu=U[0][i]/m
+
+  cpd_edf=m
+  for cpd_edf in range(int(m),0,-1):
+    if(1 == cpd_edf):
+      break
+    if((1/cab_edf) < math.ceil(float(m)/(cpd_edf-1))*cpu):
+      break
+
+  cpd_fp=m
+  for cpd_fp in range(int(m),0,-1):
+    if(1 == cpd_fp):
+      break
+    if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
+      break
+
   priority = 1 + i;
 #   print(m)
-  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-#   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, duration))
+  # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
+  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
+  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, cpd_edf, duration))
+  g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, cpd_fp, duration))
 g.close()
 g2.close()
 
 # for t in T:
-  
-
 
 # for partitioned scheduling
 # file_name_3 = './partitioned_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
