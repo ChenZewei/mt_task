@@ -196,12 +196,12 @@ for i in range(n):
       if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
         break
 
-  print("parallel degree:", m)
-  print("cgedf parallel degree:", cpd_edf)
-  print("cgfp parallel degree:", cpd_fp)
-  print("critical path utilization:", U[0][i]/m)
-  print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
-  print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
+  # print("parallel degree:", m)
+  # print("cgedf parallel degree:", cpd_edf)
+  # print("cgfp parallel degree:", cpd_fp)
+  # print("critical path utilization:", U[0][i]/m)
+  # print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
+  # print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
   # if (m < math.ceil(U[0][i])):
   #   m = math.ceil(U[0][i])
   priority = 1 + i;
