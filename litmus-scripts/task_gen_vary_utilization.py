@@ -179,13 +179,11 @@ for i in range(n):
       break
 
   cpd_fp=m
-
-  # cpd_fp=m
-  # for cpd_fp in range(int(m),0,-1):
-  #   if(1 == cpd_fp):
-  #     break
-  #   if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
-  #     break
+  for cpd_fp in range(int(m),0,-1):
+    if(1 == cpd_fp):
+      break
+    if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
+      break
 
   # if(p_num >= (cpd_sum + math.ceil(U[0][i]))):
   #   cpd_fp=math.ceil(U[0][i])
