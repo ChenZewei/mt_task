@@ -161,9 +161,6 @@ for i in range(n):
   #   m=lb_m
   # else:
   #   m=random.randint(lb_m,ub_m)
-
-  m=p_num
-
   cpu=U[0][i]/m
 
   cpd_edf=m
