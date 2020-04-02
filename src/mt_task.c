@@ -160,9 +160,9 @@ int main(int argc, char** argv)
 			else if (0 == strcmp(argv[arg], "-u"))
 				utilization = atof(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-p"))
-				period = ms2ns(atof(argv[++arg]));
+				period = ms2ns(atof(argv[++arg]))*10;
 			else if (0 == strcmp(argv[arg], "-d"))
-				deadline = ms2ns(atof(argv[++arg]));
+				deadline = ms2ns(atof(argv[++arg]))*10;
 			else if (0 == strcmp(argv[arg], "-q")) {
 				priority = atoi(argv[++arg]);
 				if (!litmus_is_valid_fixed_prio(priority))
