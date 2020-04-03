@@ -377,17 +377,17 @@ static int loop_s(double s) {
 static int loop_ms(double ms) {
 	int tmp;
 	double gap = ms;
-	double start = cputime();
-	double now;
+	// double start = cputime();
+	// double now;
 	long iteration = ms * 267000;
 	while (++tmp < iteration) {}
-	now = cputime();
-	gap = (now - start) * 1000;
-	if (0 < gap) {
-		iteration = gap * 267000;
-		tmp = 0;
-		while (++tmp < iteration) {}
-	}
+	// now = cputime();
+	// gap = (now - start) * 1000;
+	// if (0 < gap) {
+	// 	iteration = gap * 267000;
+	// 	tmp = 0;
+	// 	while (++tmp < iteration) {}
+	// }
 	return tmp;
 }
 
