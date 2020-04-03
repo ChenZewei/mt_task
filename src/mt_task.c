@@ -28,7 +28,7 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
-#define SCALE							1
+#define SCALE							10
 #define NUMS 4096
 
 /* Let's create 10 threads in the example, 

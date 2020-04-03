@@ -19,7 +19,7 @@ iteration=$4
 mkdir $TSK_FLD
 cp $GEN_SCRIPT $TSK_FLD
 cd $TSK_FLD
-for norm_u in $(seq 0.2 0.1 0.8)
+for norm_u in $(seq 0.1 0.1 1.0)
 do
   for((i=1;i<=$iteration;i++));
   do
