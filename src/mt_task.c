@@ -382,7 +382,7 @@ static int loop_ms(double ms) {
 			printf("Actually execute for %8.2f ms (suppose to be %8.2f ms)\n", (now-start)*1000, ms);
 			printf("Max loop: %8.2f ms, this loop %8.2f ms.\n", max_loop, (now-loop_start)*1000);
 		}
-		if (max_loop < now - loop_start)
+		if (max_loop < (now - loop_start))
 			max_loop = now - loop_start;
 	}
 	return tmp;
