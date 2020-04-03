@@ -397,8 +397,8 @@ static int loop_ms(double ms, double emergency_exit) {
 			break;
 		}
 		if (ms/1000 < (now-start)) {
-			printf("Actually execute for %8.2f ms (suppose to be %8.2f ms)\n", (now-start)*1000, ms);
-			printf("Max loop: %8.2f ms, this loop %8.2f ms.\n", max_loop*1000, (now-loop_start)*1000);
+			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
+			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
 		}
 		if (max_loop < (now - loop_start))
 			max_loop = now - loop_start;
