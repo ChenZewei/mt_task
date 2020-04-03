@@ -314,18 +314,24 @@ void* rt_thread(void *tcontext) {
 	CALL(wait_for_ts_release());
 
 	for (uint i = ctx->iteration; i > 0; i--) {
-		// non-critical section 1
-		loop_ms(ns2ms(ctx->sub_wcet/2), 0);
 
-		// critical section
-		if (-1 != ctx->sr.lock_od) {
-			litmus_lock(ctx->sr.lock_od);
-			loop_us(ctx->sr.cs_length);
-			litmus_unlock(ctx->sr.lock_od);
-		}
 
-		// non-critical section 2
-		loop_ms(ns2ms(ctx->sub_wcet/2), 0);
+		loop_ms(ns2ms(ctx->sub_wcet), 0);
+
+		// // non-critical section 1
+		// loop_ms(ns2ms(ctx->sub_wcet/2), 0);
+
+		// // critical section
+		// if (-1 != ctx->sr.lock_od) {
+		// 	litmus_lock(ctx->sr.lock_od);
+		// 	loop_us(ctx->sr.cs_length);
+		// 	litmus_unlock(ctx->sr.lock_od);
+		// }
+
+		// // non-critical section 2
+		// loop_ms(ns2ms(ctx->sub_wcet/2), 0);
+
+
 		sleep_next_period();
 	}
 
