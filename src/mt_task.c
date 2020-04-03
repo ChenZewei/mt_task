@@ -86,8 +86,8 @@ int job(void);
 static noinline int loop(int count);
 static int loop_s(double s);
 static int loop_ms(double ms, double emergency_exit);
-static noinline int loop_us(double us);
-static noinline int loop_ns(double ns);
+static int loop_us(double us);
+static int loop_ns(double ns);
 
 // #define loop_once() loop(NUMS)
 #define loop_once() loop_us(1)
@@ -382,7 +382,8 @@ static int loop_ms(double ms, double emergency_exit) {
 
 	while (now + max_loop < start + (ms/1000)) {
 		loop_start = now;
-		tmp = loop_once();
+		// tmp = loop_once();
+		tmp++;
 		now = cputime();
 
 		if (emergency_exit && wctime() > emergency_exit) {
@@ -409,14 +410,14 @@ static int loop_ms(double ms, double emergency_exit) {
 	return tmp;
 }
 
-static noinline int loop_us(double us) {
+static int loop_us(double us) {
 	int tmp = 0;
 	long iteration = us * 267;
 	while (++tmp < iteration) {}
 	return tmp;
 }
 
-static noinline int loop_ns(double ns) {
+static int loop_ns(double ns) {
 	int tmp = 0;
 	// double count = cycles_ms * ns2ms(ns);
 	// tmp += loop(count);
