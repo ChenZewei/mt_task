@@ -405,7 +405,7 @@ static int loop_ms(double ms, int thread_id) {
 	
 	// rdtscll(ts_1);
 
-	while (0 < gap) {
+	while (0 < gap - max_loop) {
 		rdtscll(tstamp1);
 		// loop_start = cputime();
 		// tmp = loop_once(thread_id);
@@ -418,15 +418,14 @@ static int loop_ms(double ms, int thread_id) {
 		period = tstamp2 - tstamp1;
 		period /= 2400000;
 
-
 		// if (ms/1000 < (now-start)) {
 		// 	printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
 		// 	printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
 
 		// 	printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
 		// }
-		// if (max_loop < period)
-		// 	max_loop = period;
+		if (max_loop < period)
+			max_loop = period;
 		gap -= period;
 	}
 	now = cputime();
