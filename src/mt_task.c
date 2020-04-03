@@ -89,8 +89,8 @@ static int loop_ms(double ms, double emergency_exit);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-// #define loop_once() loop(1)
-#define loop_once() loop_us(10)
+#define loop_once() loop(NUMS)
+// #define loop_once() loop_us(10)
 
 int ceil(double num) {
 	int result = num;
