@@ -220,8 +220,8 @@ int main(int argc, char** argv)
 		constrained_pd = ceil(utilization * 4.0);
 	}
 
-	// if (constrained_pd > 2)
-	// 	constrained_pd = 2;
+	if (constrained_pd > 2)
+		constrained_pd = 2;
 
 	assert(constrained_pd > 0);
 	printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
