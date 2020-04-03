@@ -397,7 +397,6 @@ static int loop_ms(double ms, int thread_id) {
 	double max_loop = 0, loop_start;
 	double start = cputime();
 	double now; // = cputime();
-	double loop_start;
 	double gap = ms;
 	double period;
 	long ts_1, ts_2;
