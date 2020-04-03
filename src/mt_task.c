@@ -386,6 +386,8 @@ static int loop_ms(double ms, double emergency_exit) {
 				*/
 			fprintf(stderr, "Reached experiment timeout while "
 							"spinning.\n");
+			printf("Reached experiment timeout while "
+							"spinning.\n");
 			break;
 		}
 		if (ms/1000 < (now-start)) {
