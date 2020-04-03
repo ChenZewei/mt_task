@@ -397,6 +397,7 @@ static int loop_ms(double ms, int thread_id) {
 	double max_loop = 0, loop_start;
 	double start = cputime();
 	double now; // = cputime();
+	double loop_start;
 	double gap = ms;
 	double period;
 	long ts_1, ts_2;
@@ -406,17 +407,23 @@ static int loop_ms(double ms, int thread_id) {
 	// rdtscll(ts_1);
 
 	while (0 < gap - max_loop) {
+		loop_start = cputime();
 		rdtscll(tstamp1);
-		// loop_start = cputime();
 		// tmp = loop_once(thread_id);
 		// tmp++;	
 		while (++tmp < iteration) {}
+
 		rdtscll(tstamp2);
+
+		now = cputime();
 		// rdtscll(tstamp3);
 		// now = cputime();
 		// rdtscll(tstamp4);
 		period = tstamp2 - tstamp1;
 		period /= 2394500;
+
+		// if (period > (now - loop_start)*1000)
+			printf("period: %llu, ap: %8.3f \n", period, (now - loop_start)*1000);
 
 		// if (ms/1000 < (now-start)) {
 		// 	printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
