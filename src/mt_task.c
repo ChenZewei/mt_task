@@ -380,6 +380,8 @@ static int loop_ms(double ms) {
 		now = cputime();
 		if (max_loop < now - loop_start)
 			max_loop = now - loop_start;
+		if (ms/1000 < (now-start))
+			printf("actually execute for %8.2f ms\n", (now-start)*1000);
 	}
 	return tmp;
 	// long iteration = ms * 267000;
