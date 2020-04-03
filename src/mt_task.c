@@ -85,7 +85,7 @@ int job(void);
 
 static noinline int loop(int count);
 static int loop_s(double s);
-static int loop_ms(double ms);
+static int loop_ms(double ms, 0);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
@@ -315,7 +315,7 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 		// non-critical section 1
-		loop_ms(ns2ms(ctx->sub_wcet/2));
+		loop_ms(ns2ms(ctx->sub_wcet/2), 0);
 
 		// critical section
 		if (-1 != ctx->sr.lock_od) {
@@ -325,7 +325,7 @@ void* rt_thread(void *tcontext) {
 		}
 
 		// non-critical section 2
-		loop_ms(ns2ms(ctx->sub_wcet/2));
+		loop_ms(ns2ms(ctx->sub_wcet/2), 0);
 		sleep_next_period();
 	}
 
@@ -368,7 +368,7 @@ static int loop_s(double s) {
 	return tmp;
 }
 
-static int loop_ms(double ms) {
+static int loop_ms(double ms, double emergency_exit) {
 	int tmp = 0;
 	double max_loop = 0, loop_start;
 	double start = cputime();
@@ -378,6 +378,16 @@ static int loop_ms(double ms) {
 		loop_start = now;
 		tmp += loop_once();
 		now = cputime();
+
+		if (emergency_exit && wctime() > emergency_exit) {
+			/* Oops --- this should only be possible if the
+				* execution time tracking is broken in the LITMUS^RT
+				* kernel or the user specified infeasible parameters.
+				*/
+			fprintf(stderr, "Reached experiment timeout while "
+							"spinning.\n");
+			break;
+		}
 		if (ms/1000 < (now-start)) {
 			printf("Actually execute for %8.2f ms (suppose to be %8.2f ms)\n", (now-start)*1000, ms);
 			printf("Max loop: %8.2f ms, this loop %8.2f ms.\n", max_loop*1000, (now-loop_start)*1000);
