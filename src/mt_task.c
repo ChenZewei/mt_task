@@ -397,9 +397,11 @@ static int loop_ms(double ms, int thread_id) {
 	double max_loop = 0, loop_start;
 	double start = cputime();
 	double now = cputime();
-
-	long iteration = ms * 267;
+	long ts_1, ts_2;
+	long iteration = ms * 26700;
 	long tstamp1, tstamp2, tstamp3, tstamp4;
+
+	// rdtscll(ts_1);
 
 	while (now + max_loop < start + (ms/1000)) {
 		rdtscll(tstamp1);
