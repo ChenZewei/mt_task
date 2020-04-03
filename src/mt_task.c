@@ -28,7 +28,7 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
-#define NUMS 4096
+#define NUMS 1024
 
 /* Let's create 10 threads in the example, 
  * for a total utilization of 1.
