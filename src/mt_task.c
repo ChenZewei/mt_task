@@ -28,7 +28,7 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
-#define NUMS 1024
+#define NUMS 4096
 
 /* Let's create 10 threads in the example, 
  * for a total utilization of 1.
@@ -396,22 +396,23 @@ static int loop_ms(double ms) {
 	double max_loop = 0, loop_start;
 	double start = cputime();
 	double now = cputime();
-	long tstamp1, tstamp2, tstamp3;
+	long tstamp1, tstamp2, tstamp3, tstamp4;
 
 	while (now + max_loop < start + (ms/1000)) {
 		rdtscll(tstamp1);
 		loop_start = cputime();
+		rdtscll(tstamp2);
 		tmp = loop_once();
 		tmp++;
-		rdtscll(tstamp2);
-		now = cputime();
 		rdtscll(tstamp3);
+		now = cputime();
+		rdtscll(tstamp4);
 
 		if (ms/1000 < (now-start)) {
 			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
 			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
 
-			printf("t1: %llu, t2: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2);
+			printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
 		}
 		if (max_loop < (now - loop_start))
 			max_loop = now - loop_start;
