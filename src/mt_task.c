@@ -28,6 +28,7 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
+#define SCALE							1
 #define NUMS 4096
 
 /* Let's create 10 threads in the example, 
@@ -161,9 +162,9 @@ int main(int argc, char** argv)
 			else if (0 == strcmp(argv[arg], "-u"))
 				utilization = atof(argv[++arg]);
 			else if (0 == strcmp(argv[arg], "-p"))
-				period = ms2ns(atof(argv[++arg]))*10;
+				period = ms2ns(atof(argv[++arg]))*SCALE;
 			else if (0 == strcmp(argv[arg], "-d"))
-				deadline = ms2ns(atof(argv[++arg]))*10;
+				deadline = ms2ns(atof(argv[++arg]))*SCALE;
 			else if (0 == strcmp(argv[arg], "-q")) {
 				priority = atoi(argv[++arg]);
 				if (!litmus_is_valid_fixed_prio(priority))
