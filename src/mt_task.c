@@ -85,7 +85,7 @@ int job(void);
 
 static noinline int loop(int count);
 static int loop_s(double s);
-static int loop_ms(double ms, 0);
+static int loop_ms(double ms, double emergency_exit);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
