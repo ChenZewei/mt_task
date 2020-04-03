@@ -89,7 +89,7 @@ static int loop_ms(double ms);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-#define loop_once() loop(1024)
+#define loop_once() loop(64)
 // #define loop_once() loop_ns(10)
 
 int ceil(double num) {
