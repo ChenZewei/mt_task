@@ -400,7 +400,7 @@ static int loop_ms(double ms) {
 
 	while (now + max_loop < start + (ms/1000)) {
 		rdtscll(tstamp1);
-		loop_start = now;
+		loop_start = cputime();
 		tmp = loop_once();
 		tmp++;
 		rdtscll(tstamp2);
