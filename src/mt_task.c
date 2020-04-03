@@ -89,8 +89,8 @@ static int loop_ms(double ms);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-// #define loop_once() loop(1024)
-#define loop_once() loop_ns(10)
+#define loop_once() loop(1024)
+// #define loop_once() loop_ns(10)
 
 int ceil(double num) {
 	int result = num;
@@ -370,15 +370,16 @@ static int loop_s(double s) {
 
 static int loop_ms(double ms) {
 	int tmp = 0;
-	double last_loop = 0, loop_start;
+	double max_loop = 0, loop_start;
 	double start = cputime();
 	double now = cputime();
 
-	while (now + last_loop < start + (ms/1000)) {
+	while (now + max_loop < start + (ms/1000)) {
 		loop_start = now;
 		tmp += loop_once();
 		now = cputime();
-		last_loop = now - loop_start;
+		if (max_loop < now - loop_start)
+			max_loop = now - loop_start;
 	}
 	return tmp;
 	// long iteration = ms * 267000;
