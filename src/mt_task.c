@@ -374,47 +374,53 @@ static int loop_s(double s) {
 	return tmp;
 }
 
-static int loop_ms(double ms) {
-	int tmp;
-	double gap = ms;
-	// double start = cputime();
-	// double now;
-	long iteration = ms * 267000;
-	while (++tmp < iteration) {}
-	// now = cputime();
-	// gap = (now - start) * 1000;
-	// if (0 < gap) {
-	// 	iteration = gap * 267000;
-	// 	tmp = 0;
-	// 	while (++tmp < iteration) {}
-	// }
-	return tmp;
-}
-
 // static int loop_ms(double ms) {
-// 	int tmp = 0;
-// 	double max_loop = 0, loop_start;
-// 	double start = cputime();
-// 	double now = cputime();
-
-// 	while (now + max_loop < start + (ms/1000)) {
-// 		loop_start = now;
-// 		// tmp = loop_once();
-// 		tmp++;
-// 		now = cputime();
-
-// 		if (ms/1000 < (now-start)) {
-// 			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
-// 			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
-// 		}
-// 		if (max_loop < (now - loop_start))
-// 			max_loop = now - loop_start;
-// 	}
-// 	return tmp;
-// 	// long iteration = ms * 267000;
-// 	// while (++n < iteration) {}
+// 	int tmp;
+// 	double gap = ms;
+// 	// double start = cputime();
+// 	// double now;
+// 	long iteration = ms * 267000;
+// 	while (++tmp < iteration) {}
+// 	// now = cputime();
+// 	// gap = (now - start) * 1000;
+// 	// if (0 < gap) {
+// 	// 	iteration = gap * 267000;
+// 	// 	tmp = 0;
+// 	// 	while (++tmp < iteration) {}
+// 	// }
 // 	return tmp;
 // }
+
+static int loop_ms(double ms) {
+	int tmp = 0;
+	double max_loop = 0, loop_start;
+	double start = cputime();
+	double now = cputime();
+	long tstamp1, tstamp2, tstamp3;
+
+	while (now + max_loop < start + (ms/1000)) {
+		rdtscll(tstamp1);
+		// loop_start = now;
+		tmp = loop_once();
+		tmp++;
+		rdtscll(tstamp2);
+		now = cputime();
+		rdtscll(tstamp3);
+
+		if (ms/1000 < (now-start)) {
+			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
+			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
+
+			printf("t1: %llu, t2: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2);
+		}
+		if (max_loop < (now - loop_start))
+			max_loop = now - loop_start;
+	}
+	return tmp;
+	// long iteration = ms * 267000;
+	// while (++n < iteration) {}
+	return tmp;
+}
 
 static int loop_us(double us) {
 	int tmp = 0;
