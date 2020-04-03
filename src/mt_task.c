@@ -51,7 +51,7 @@ static void usage(char *error) {
 
 
 static int cycles_ms = 2400000;
-static int num[NUMS];
+static int num[NUM_THREADS][NUMS];
 
 typedef struct shared_resource {
 	int lock_od;
@@ -83,14 +83,14 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
-static noinline int loop(int count);
-static int loop_s(double s);
-static int loop_ms(double ms);
+static noinline int loop(int count, int thread_id);
+static int loop_s(double s, int thread_id);
+static int loop_ms(double ms, int thread_id);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-// #define loop_once() loop(NUMS)
-#define loop_once() loop_us(1)
+#define loop_once(id) loop(NUMS, id)
+// #define loop_once() loop_us(1)
 
 int ceil(double num) {
 	int result = num;
@@ -316,7 +316,7 @@ void* rt_thread(void *tcontext) {
 	for (uint i = ctx->iteration; i > 0; i--) {
 
 
-		loop_ms(ns2ms(ctx->sub_wcet));
+		loop_ms(ns2ms(ctx->sub_wcet), ctx->id);
 
 		// // non-critical section 1
 		// loop_ms(ns2ms(ctx->sub_wcet/2));
@@ -346,20 +346,20 @@ int job(void) {
 	return 0;
 }
 
-static noinline int loop(int count)
+static noinline int loop(int count, int thread_id)
 {
 	int i, j = 0;
 	/* touch some numbers and do some math */
 	for (i = 0; i < count; i++) {
 		int index = i % NUMS;
-		j += num[index]++;
+		j += num[thread_id][index]++;
 		if (j > num[index])
-			num[index] = (j / 2) + 1;
+			num[thread_id][index] = (j / 2) + 1;
 	}
 	return j;
 }
 
-static int loop_s(double s) {
+static int loop_s(double s, int thread_id) {
 	int tmp = 0;
 	double last_loop = 0, loop_start;
 	double start = cputime();
@@ -367,7 +367,7 @@ static int loop_s(double s) {
 
 	while (now + last_loop < start + s) {
 		loop_start = now;
-		tmp = loop_once();
+		tmp = loop_once(thread_id);
 		now = cputime();
 		last_loop = now - loop_start;
 	}
@@ -391,7 +391,7 @@ static int loop_s(double s) {
 // 	return tmp;
 // }
 
-static int loop_ms(double ms) {
+static int loop_ms(double ms, int thread_id) {
 	int tmp = 0;
 	double max_loop = 0, loop_start;
 	double start = cputime();
@@ -402,7 +402,7 @@ static int loop_ms(double ms) {
 		rdtscll(tstamp1);
 		loop_start = cputime();
 		rdtscll(tstamp2);
-		tmp = loop_once();
+		tmp = loop_once(thread_id);
 		tmp++;
 		rdtscll(tstamp3);
 		now = cputime();
