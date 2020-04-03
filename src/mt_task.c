@@ -416,7 +416,7 @@ static int loop_ms(double ms, int thread_id) {
 		// now = cputime();
 		// rdtscll(tstamp4);
 		period = tstamp2 - tstamp1;
-		period /= 2400000;
+		period /= 2670000;
 
 		// if (ms/1000 < (now-start)) {
 		// 	printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
