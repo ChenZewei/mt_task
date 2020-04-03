@@ -90,7 +90,7 @@ static int loop_ms(double ms, int thread_id);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-#define loop_once(id) loop(NUMS, id)
+#define loop_once(id) loop(128, id)
 // #define loop_once() loop_us(1)
 
 int ceil(double num) {
