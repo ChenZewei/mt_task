@@ -367,7 +367,7 @@ static int loop_s(double s) {
 
 	while (now + last_loop < start + s) {
 		loop_start = now;
-		tmp += loop_once();
+		tmp = loop_once();
 		now = cputime();
 		last_loop = now - loop_start;
 	}
@@ -382,7 +382,7 @@ static int loop_ms(double ms, double emergency_exit) {
 
 	while (now + max_loop < start + (ms/1000)) {
 		loop_start = now;
-		tmp += loop_once();
+		tmp = loop_once();
 		now = cputime();
 
 		if (emergency_exit && wctime() > emergency_exit) {
