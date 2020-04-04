@@ -398,28 +398,28 @@ static int loop_ms(double ms, int* num) {
 	double max_loop = 0, loop_start, gap;
 	long iteration = ms * 26700;
 	double start = cputime();
-	loop_once(num);
+	// loop_once(num);
 	// while (++tmp < iteration) {}
-	double now = cputime();
+	double now = start;
 	// long tstamp1, tstamp2, tstamp3, tstamp4;
-	gap = (now - start) * 1000;
+	// gap = (now - start) * 1000;
 
-	// while (now + max_loop < start + (ms/1000)) {
-	for (int i = 0; i < ms/gap - 1; i++) {
+	while (now + max_loop < start + (ms/1000)) {
+	// for (int i = 0; i < ms/gap - 1; i++) {
 		// tmp = 0;
 		// rdtscll(tstamp1);
-		// loop_start = cputime();
+		loop_start = cputime();
 		// rdtscll(tstamp2);
 		loop_once(num);
 		// while (++tmp < iteration) {}
 		// tmp++;
 		// rdtscll(tstamp3);
-		// now = cputime();
+		now = cputime();
 		// rdtscll(tstamp4);
 
 
-		// if (max_loop < (now - loop_start))
-		// 	max_loop = now - loop_start;
+		if (max_loop < (now - loop_start))
+			max_loop = now - loop_start;
 	}
 	// now = cputime();
 
