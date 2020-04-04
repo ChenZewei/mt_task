@@ -150,8 +150,8 @@ index.sort()
 # cab_edf=(3+math.sqrt(5))/2
 # cab_fp=(4+math.sqrt(12))/2
 
-cab_edf=2
-cab_fp=2
+cab_edf=2.0
+cab_fp=2.0
 
 # print(1/cab_edf)
 # print(1/cab_fp)
