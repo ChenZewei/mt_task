@@ -419,7 +419,7 @@ static int loop_ms(double ms, int thread_id) {
 		// now = cputime();
 		// rdtscll(tstamp4);
 		period = tstamp2 - tstamp1;
-		period /= 2000000;
+		period /= 800000;
 
 		// if (period > (now - loop_start)*1000)
 			// printf("period: %llu, ap: %8.3f \n", period, (now - loop_start)*1000);
