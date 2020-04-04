@@ -403,7 +403,7 @@ static int loop_ms(double ms, int thread_id) {
 	gap = (now - start) * 1000;
 
 	// while (now + max_loop < start + (ms/1000)) {
-	for (int i = 0; i < ms/gap - 1; i++) {
+	for (int i = 0; i < ms/gap - 2; i++) {
 		tmp = 0;
 		// rdtscll(tstamp1);
 		// loop_start = cputime();
