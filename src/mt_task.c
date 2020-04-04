@@ -52,7 +52,7 @@ static void usage(char *error) {
 
 
 static int cycles_ms = 2400000;
-static int num[NUM_THREADS][NUMS];
+// static int num[NUM_THREADS][NUMS];
 
 typedef struct shared_resource {
 	int lock_od;
@@ -84,9 +84,9 @@ void* rt_thread(void *tcontext);
  */
 int job(void);
 
-static noinline int loop(int count, int thread_id);
-static int loop_s(double s, int thread_id);
-static int loop_ms(double ms, int thread_id);
+static noinline int loop(int count, int* num);
+static int loop_s(double s, int* num);
+static int loop_ms(double ms, int* num);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
@@ -290,6 +290,7 @@ int main(int argc, char** argv)
  * data structures of the LITMUS^RT user space libary.
  */
 void* rt_thread(void *tcontext) {
+	int num[NUMS];
 	struct rt_task param;
 	struct thread_context *ctx = (struct thread_context *) tcontext;
 	
@@ -317,7 +318,7 @@ void* rt_thread(void *tcontext) {
 	for (uint i = ctx->iteration; i > 0; i--) {
 
 
-		loop_ms(ns2ms(ctx->sub_wcet), ctx->id);
+		loop_ms(ns2ms(ctx->sub_wcet), num);
 
 		// // non-critical section 1
 		// loop_ms(ns2ms(ctx->sub_wcet/2));
@@ -347,20 +348,20 @@ int job(void) {
 	return 0;
 }
 
-static noinline int loop(int count, int thread_id)
+static noinline int loop(int count, int* num)
 {
 	int i, j = 0;
 	/* touch some numbers and do some math */
 	for (i = 0; i < count; i++) {
 		int index = i % NUMS;
-		j += num[thread_id][index]++;
+		j += num[index]++;
 		if (j > num[index])
-			num[thread_id][index] = (j / 2) + 1;
+			num[index] = (j / 2) + 1;
 	}
 	return j;
 }
 
-static int loop_s(double s, int thread_id) {
+static int loop_s(double s, int* num) {
 	int tmp = 0;
 	double last_loop = 0, loop_start;
 	double start = cputime();
@@ -368,7 +369,7 @@ static int loop_s(double s, int thread_id) {
 
 	while (now + last_loop < start + s) {
 		loop_start = now;
-		tmp = loop_once(thread_id);
+		tmp = loop_once(num);
 		now = cputime();
 		last_loop = now - loop_start;
 	}
@@ -392,24 +393,25 @@ static int loop_s(double s, int thread_id) {
 // 	return tmp;
 // }
 
-static int loop_ms(double ms, int thread_id) {
+static int loop_ms(double ms, int* num) {
 	int tmp = 0;
 	double max_loop = 0, loop_start, gap;
 	long iteration = ms * 26700;
 	double start = cputime();
-	while (++tmp < iteration) {}
+	loop_once(num);
+	// while (++tmp < iteration) {}
 	double now = cputime();
 	// long tstamp1, tstamp2, tstamp3, tstamp4;
 	gap = (now - start) * 1000;
 
 	// while (now + max_loop < start + (ms/1000)) {
-	for (int i = 0; i < ms/gap - 2; i++) {
-		tmp = 0;
+	for (int i = 0; i < ms/gap - 1; i++) {
+		// tmp = 0;
 		// rdtscll(tstamp1);
 		// loop_start = cputime();
 		// rdtscll(tstamp2);
-		// loop_once(thread_id);
-		while (++tmp < iteration) {}
+		loop_once(num);
+		// while (++tmp < iteration) {}
 		// tmp++;
 		// rdtscll(tstamp3);
 		// now = cputime();
