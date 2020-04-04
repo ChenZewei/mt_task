@@ -28,7 +28,7 @@
 #define RELATIVE_DEADLINE 100
 #define EXEC_COST         10
 #define MAX_INT 					0xffffffff
-#define SCALE							10
+#define SCALE							1
 #define NUMS 4096
 
 /* Let's create 10 threads in the example, 
@@ -395,7 +395,7 @@ static int loop_s(double s, int* num) {
 
 static int loop_ms(double ms, int* num) {
 	int tmp = 0;
-	double max_loop = 0, loop_start, gap;
+	double last_loop = 0, loop_start;
 	long iteration = ms * 26700;
 	double start = cputime();
 	// loop_once(num);
@@ -404,7 +404,7 @@ static int loop_ms(double ms, int* num) {
 	// long tstamp1, tstamp2, tstamp3, tstamp4;
 	// gap = (now - start) * 1000;
 
-	while (now + max_loop < start + (ms/1000)) {
+	while (now + last_loop < start + (ms/1000)) {
 	// for (int i = 0; i < ms/gap - 1; i++) {
 		// tmp = 0;
 		// rdtscll(tstamp1);
@@ -418,8 +418,9 @@ static int loop_ms(double ms, int* num) {
 		// rdtscll(tstamp4);
 
 
-		if (max_loop < (now - loop_start))
-			max_loop = now - loop_start;
+		last_loop = now - loop_start;
+		// if (max_loop < (now - loop_start))
+		// 	max_loop = now - loop_start;
 	}
 	// now = cputime();
 
