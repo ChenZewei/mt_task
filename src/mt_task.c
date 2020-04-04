@@ -394,32 +394,39 @@ static int loop_s(double s, int thread_id) {
 
 static int loop_ms(double ms, int thread_id) {
 	int tmp = 0;
-	double max_loop = 0, loop_start;
+	double max_loop = 0, loop_start, gap;
 	long iteration = ms * 26700;
 	double start = cputime();
+	while (++tmp < iteration) {}
 	double now = cputime();
 	// long tstamp1, tstamp2, tstamp3, tstamp4;
+	gap = (now - start) * 1000;
 
-	while (now + max_loop < start + (ms/1000)) {
+	// while (now + max_loop < start + (ms/1000)) {
+	for (int i = 0; i < ms/gap - 1; i++) {
+		tmp = 0;
 		// rdtscll(tstamp1);
-		loop_start = cputime();
+		// loop_start = cputime();
 		// rdtscll(tstamp2);
 		// loop_once(thread_id);
 		while (++tmp < iteration) {}
 		// tmp++;
 		// rdtscll(tstamp3);
-		now = cputime();
+		// now = cputime();
 		// rdtscll(tstamp4);
 
-		if (ms/1000 < (now-start)) {
-			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
-			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
 
-			// printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
-		}
-		if (max_loop < (now - loop_start))
-			max_loop = now - loop_start;
+		// if (max_loop < (now - loop_start))
+		// 	max_loop = now - loop_start;
 	}
+	now = cputime();
+
+	if (ms/1000 < (now-start)) {
+		printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
+		// printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
+		// printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
+	}
+
 	return tmp;
 	// long iteration = ms * 267000;
 	// while (++n < iteration) {}
