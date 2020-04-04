@@ -395,6 +395,7 @@ static int loop_s(double s, int thread_id) {
 static int loop_ms(double ms, int thread_id) {
 	int tmp = 0;
 	double max_loop = 0, loop_start;
+	long iteration = ms * 26700;
 	double start = cputime();
 	double now = cputime();
 	// long tstamp1, tstamp2, tstamp3, tstamp4;
@@ -403,8 +404,9 @@ static int loop_ms(double ms, int thread_id) {
 		// rdtscll(tstamp1);
 		loop_start = cputime();
 		// rdtscll(tstamp2);
-		loop_once(thread_id);
-		tmp++;
+		// loop_once(thread_id);
+		while (++tmp < iteration) {}
+		// tmp++;
 		// rdtscll(tstamp3);
 		now = cputime();
 		// rdtscll(tstamp4);
