@@ -422,7 +422,7 @@ static int loop_ms(double ms, int thread_id) {
 		period /= 2394500;
 
 		// if (period > (now - loop_start)*1000)
-			printf("period: %llu, ap: %8.3f \n", period, (now - loop_start)*1000);
+			// printf("period: %llu, ap: %8.3f \n", period, (now - loop_start)*1000);
 
 		// if (ms/1000 < (now-start)) {
 		// 	printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
