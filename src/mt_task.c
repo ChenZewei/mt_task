@@ -396,51 +396,28 @@ static int loop_ms(double ms, int thread_id) {
 	int tmp = 0;
 	double max_loop = 0, loop_start;
 	double start = cputime();
-	double now; // = cputime();
-	double gap = ms;
-	double period;
-	long ts_1, ts_2;
-	long iteration = ms * 26700;
-	long tstamp1, tstamp2, tstamp3, tstamp4;
-	
-	// rdtscll(ts_1);
+	double now = cputime();
+	// long tstamp1, tstamp2, tstamp3, tstamp4;
 
-	while (0 < gap - max_loop) {
+	while (now + max_loop < start + (ms/1000)) {
+		// rdtscll(tstamp1);
 		loop_start = cputime();
-		rdtscll(tstamp1);
-		tmp = loop_once(thread_id);
-		// tmp++;	
-		// while (++tmp < iteration) {}
-
-		rdtscll(tstamp2);
-
-		now = cputime();
+		// rdtscll(tstamp2);
+		loop_once(thread_id);
+		tmp++;
 		// rdtscll(tstamp3);
-		// now = cputime();
+		now = cputime();
 		// rdtscll(tstamp4);
-		period = tstamp2 - tstamp1;
-		period /= 800000;
 
-		// if (period > (now - loop_start)*1000)
-			// printf("period: %llu, ap: %8.3f \n", period, (now - loop_start)*1000);
+		if (ms/1000 < (now-start)) {
+			printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
+			printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
 
-		// if (ms/1000 < (now-start)) {
-		// 	printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
-		// 	printf("Max loop: %8.6f ms, this loop %8.6f ms.\n", max_loop*1000, (now-loop_start)*1000);
-
-		// 	printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
-		// }
-		if (max_loop < period)
-			max_loop = period;
-		gap -= period;
+			// printf("t1: %llu, t2: %llu u, t3: %llu \n", tstamp2 - tstamp1, tstamp3 - tstamp2, tstamp4 - tstamp3);
+		}
+		if (max_loop < (now - loop_start))
+			max_loop = now - loop_start;
 	}
-	now = cputime();
-
-	if (ms/1000 < (now-start)) {
-		printf("Actually execute for %8.6f ms (suppose to be %8.6f ms)\n", (now-start)*1000, ms);
-	}
-
-
 	return tmp;
 	// long iteration = ms * 267000;
 	// while (++n < iteration) {}
