@@ -408,9 +408,9 @@ static int loop_ms(double ms, int thread_id) {
 	while (0 < gap - max_loop) {
 		loop_start = cputime();
 		rdtscll(tstamp1);
-		// tmp = loop_once(thread_id);
+		tmp = loop_once(thread_id);
 		// tmp++;	
-		while (++tmp < iteration) {}
+		// while (++tmp < iteration) {}
 
 		rdtscll(tstamp2);
 
