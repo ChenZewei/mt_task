@@ -19,7 +19,7 @@ cd $ST_DIR/gedf
 setsched GSN-EDF
 cd $TSK_FLD
 ./global_edf_$1_$2_$3_$4_$5.sh &
-sleep 1
+sleep 2
 cd $ST_DIR/gedf
 sleep `expr 3 + $3 / 1000` | st-trace-schedule gedf_$1_$2_$3_$4_$5 &
 sleep 1
