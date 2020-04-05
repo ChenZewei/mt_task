@@ -292,6 +292,7 @@ int main(int argc, char** argv)
 void* rt_thread(void *tcontext) {
 	int num[NUMS];
 	struct rt_task param;
+	double start, now;
 	struct thread_context *ctx = (struct thread_context *) tcontext;
 	
 	/* Make presence visible. */
@@ -316,6 +317,8 @@ void* rt_thread(void *tcontext) {
 	CALL(wait_for_ts_release());
 
 	for (uint i = ctx->iteration; i > 0; i--) {
+
+		start = cputime();
 		loop_ms(ns2ms(ctx->sub_wcet), num);
 
 		// // non-critical section 1
@@ -330,8 +333,9 @@ void* rt_thread(void *tcontext) {
 
 		// // non-critical section 2
 		// loop_ms(ns2ms(ctx->sub_wcet/2));
+		now = cputime();
 
-
+		printf("RT Thread [%d] job:%d response time: %6.3f ms.\n", ctx->id, i, (now-start)*1000);
 		sleep_next_period();
 	}
 
