@@ -214,8 +214,8 @@ for i in range(n):
   # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_edf, duration))
   g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_fp, duration))
-  g.write('sleep 0.1')
-  g2.write('sleep 0.1')
+  g.write('sleep 0.1\n')
+  g2.write('sleep 0.1\n')
 g.close()
 g2.close()
 
