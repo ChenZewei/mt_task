@@ -297,7 +297,7 @@ void* rt_thread(void *tcontext) {
 	
 	/* Make presence visible. */
 	// printf("RT Thread [%d] active.\n", ctx->id);
-	printf("RT Thread [%d] active.\n", getpid());
+	// printf("RT Thread [%d] active.\n", getpid());
 	// if (ctx->priority != LITMUS_LOWEST_PRIORITY)
 	// 	printf("priority: %d.\n", ctx->priority);
 	
@@ -319,7 +319,7 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 
-		start = cputime();
+		// start = cputime();
 		loop_ms(ns2ms(ctx->sub_wcet), num);
 
 		// // non-critical section 1
@@ -334,9 +334,9 @@ void* rt_thread(void *tcontext) {
 
 		// // non-critical section 2
 		// loop_ms(ns2ms(ctx->sub_wcet/2));
-		now = cputime();
+		// now = cputime();
 
-		printf("RT Thread [%d] job:%d response time: %6.3f ms.\n", getpid(), i, (now-start)*1000);
+		// printf("RT Thread [%d] job:%d response time: %6.3f ms.\n", getpid(), i, (now-start)*1000);
 		sleep_next_period();
 	}
 
