@@ -129,7 +129,7 @@ n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
-ub=2
+ub=1.8
 
 Periods = [10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000]
 
@@ -140,12 +140,12 @@ T=[random.randint(5,100) for _ in range(n)]
 
 T.sort()
 
+# cab_edf=(3+math.sqrt(5))/2
+# cab_fp=(4+math.sqrt(12))/2
 
-cab_edf=(3+math.sqrt(5))/2
-cab_fp=(4+math.sqrt(12))/2
+cab_edf=1
+cab_fp=1
 
-
-# print(index)
 # for global scheduling
 file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
@@ -153,14 +153,7 @@ file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys
 g2 = open(file_name_2, 'w')
 cpd_sum=0
 for i in range(n):
-  # lb_m=math.ceil(4*U[0][i])
-  # # ub_m=math.floor(8*U[0][i])
-  # ub_m=32
 
-  # if (lb_m >= ub_m):
-  #   m=lb_m
-  # else:
-  #   m=random.randint(lb_m,ub_m)
   cpu=U[0][i]/m
 
   cpd_edf=m
@@ -178,11 +171,11 @@ for i in range(n):
       break
 
   priority = 1 + i;
-#   print(m)
-  # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
+
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, cpd_edf, duration))
   g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, cpd_fp, duration))
+  g.write('sleep 0.1\n')
+  g2.write('sleep 0.1\n')
 g.close()
 g2.close()
 

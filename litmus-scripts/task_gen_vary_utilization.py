@@ -155,11 +155,6 @@ index.sort()
 cab_edf=1
 cab_fp=1
 
-# print(1/cab_edf)
-# print(1/cab_fp)
-
-
-# print(index)
 # for global scheduling
 file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
@@ -167,14 +162,7 @@ file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys
 g2 = open(file_name_2, 'w')
 cpd_sum=0
 for i in range(n):
-  # lb_m=math.ceil(4*U[0][i])
-  # # ub_m=math.floor(8*U[0][i])
-  # ub_m=32
 
-  # if (lb_m >= ub_m):
-  #   m=lb_m
-  # else:
-  #   m=random.randint(lb_m,ub_m)
   cpu=U[0][i]/m
 
   cpd_edf=m
@@ -191,29 +179,8 @@ for i in range(n):
     if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
       break
 
-  # if(p_num >= (cpd_sum + math.ceil(U[0][i]))):
-  #   cpd_fp=math.ceil(U[0][i])
-  #   cpd_sum+=cpd_fp
-  # else:
-  #   cpd_fp=m
-  #   for cpd_fp in range(int(m),0,-1):
-  #     if(1 == cpd_fp):
-  #       break
-  #     if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
-  #       break
-
-  # print("parallel degree:", m)
-  # print("cgedf parallel degree:", cpd_edf)
-  # print("cgfp parallel degree:", cpd_fp)
-  # print("critical path utilization:", U[0][i]/m)
-  # print("cgedf critical path utilization:", math.ceil(float(m)/cpd_edf)*cpu)
-  # print("cgfp critical path utilization:", math.ceil(float(m)/cpd_fp)*cpu)
-  # if (m < math.ceil(U[0][i])):
-  #   m = math.ceil(U[0][i])
   priority = 1 + i;
-#   print(m)
-  # g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
-  # g2.write('./mt_task_hc -u %f -p %d -d %d -q %d -m %d -t %d &\n' % (U[0][i], T[i], T[i], priority, m, duration))
+
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_edf, duration))
   g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_fp, duration))
   g.write('sleep 0.1\n')
