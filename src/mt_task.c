@@ -90,8 +90,37 @@ static int loop_ms(double ms, int* num);
 static int loop_us(double us);
 static int loop_ns(double ns);
 
-#define loop_once(id) loop(128, id)
+
+#define loop_once(setptr) loop(128, setptr)
 // #define loop_once() loop_us(1)
+
+static int loop_for(double exec_time, double emergency_exit, int* num)
+{
+	int tmp = 0;
+	double last_loop = 0, loop_start;
+	double start = cputime();
+	double now = cputime();
+
+	while (now + last_loop < start + exec_time) {
+		loop_start = now;
+		tmp += loop_once(num);
+		now = cputime();
+		last_loop = now - loop_start;
+		if (emergency_exit && wctime() > emergency_exit) {
+			/* Oops --- this should only be possible if the
+				* execution time tracking is broken in the LITMUS^RT
+				* kernel or the user specified infeasible parameters.
+				*/
+			fprintf(stderr, "!!! rtspin/%d emergency exit!\n",
+							getpid());
+			fprintf(stderr, "Reached experiment timeout while "
+							"spinning.\n");
+			break;
+		}
+	}
+
+	return tmp;
+}
 
 int ceil(double num) {
 	int result = num;
@@ -319,8 +348,9 @@ void* rt_thread(void *tcontext) {
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 
-		// start = cputime();
-		loop_ms(ns2ms(ctx->sub_wcet), num);
+		start = wctime();
+		loop_for(ns2s(ctx->sub_wcet), start + ns2s(ctx->sub_wcet), num);
+		// loop_ms(ns2ms(ctx->sub_wcet), num);
 
 		// // non-critical section 1
 		// loop_ms(ns2ms(ctx->sub_wcet/2));
