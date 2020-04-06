@@ -111,10 +111,10 @@ static int loop_for(double exec_time, double emergency_exit, int* num)
 				* execution time tracking is broken in the LITMUS^RT
 				* kernel or the user specified infeasible parameters.
 				*/
-			fprintf(stderr, "!!! rtspin/%d emergency exit!\n",
-							getpid());
-			fprintf(stderr, "Reached experiment timeout while "
-							"spinning.\n");
+			// fprintf(stderr, "!!! rtspin/%d emergency exit!\n",
+			// 				getpid());
+			// fprintf(stderr, "Reached experiment timeout while "
+			// 				"spinning.\n");
 			break;
 		}
 	}
@@ -253,7 +253,7 @@ int main(int argc, char** argv)
 	// 	constrained_pd = 2;
 
 	assert(constrained_pd > 0);
-	printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
+	// printf("utilization: %f, constrained_pd: %d\n", utilization, constrained_pd);
 
 	if (protocol >= 0) {
 		/* open reference to semaphore */
@@ -345,6 +345,7 @@ void* rt_thread(void *tcontext) {
 	CALL(set_rt_task_param(gettid(), &param));
 	CALL(task_mode(LITMUS_RT_TASK));
 	CALL(wait_for_ts_release());
+
 
 	for (uint i = ctx->iteration; i > 0; i--) {
 
