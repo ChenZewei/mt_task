@@ -130,7 +130,7 @@ n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
-ub=2
+ub=1.8
 
 # Periods = [1,2,4,5,10, 20, 25, 50, 100]
 Periods = [5,10,20,25,50,100]
