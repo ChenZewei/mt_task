@@ -244,6 +244,7 @@ int main(int argc, char** argv)
 	// 	constrained_pd = 1;
 
 	// constrained_pd = ceiling(priority, 3);
+	constrained_pd = ceil(utilization);
 
 	if (0 == constrained_pd) {
 		constrained_pd = ceil(utilization * 4.0);
@@ -350,24 +351,21 @@ void* rt_thread(void *tcontext) {
 	for (uint i = ctx->iteration; i > 0; i--) {
 
 		start = wctime();
-		loop_for(ns2s(ctx->sub_wcet), start + ns2s(ctx->sub_wcet), num);
-		// loop_ms(ns2ms(ctx->sub_wcet), num);
 
-		// // non-critical section 1
-		// loop_ms(ns2ms(ctx->sub_wcet/2));
+		if (-1 != ctx->sr.lock_od) {
+			loop_for(ns2s(ctx->sub_wcet), start + ns2s(ctx->sub_wcet), num);
+			// non-critical section 1
+			// loop_ms(ns2ms(ctx->sub_wcet/2));
 
-		// // critical section
-		// if (-1 != ctx->sr.lock_od) {
-		// 	litmus_lock(ctx->sr.lock_od);
-		// 	loop_us(ctx->sr.cs_length);
-		// 	litmus_unlock(ctx->sr.lock_od);
-		// }
+			// litmus_lock(ctx->sr.lock_od);
+			// loop_us(ctx->sr.cs_length);
+			// litmus_unlock(ctx->sr.lock_od);
+			
+			// loop_ms(ns2ms(ctx->sub_wcet/2));
 
-		// // non-critical section 2
-		// loop_ms(ns2ms(ctx->sub_wcet/2));
-		// now = cputime();
-
-		// printf("RT Thread [%d] job:%d response time: %6.3f ms.\n", getpid(), i, (now-start)*1000);
+		} else {
+			loop_for(ns2s(ctx->sub_wcet), start + ns2s(ctx->sub_wcet), num);
+		}
 		sleep_next_period();
 	}
 
