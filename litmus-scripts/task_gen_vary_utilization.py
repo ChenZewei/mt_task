@@ -130,7 +130,7 @@ n=4
 id = int(sys.argv[4])
 u_ratio = float(sys.argv[5])
 lb = 0.1
-ub=1.8
+ub=2
 
 # Periods = [1,2,4,5,10, 20, 25, 50, 100]
 Periods = [5,10,20,25,50,100]
@@ -164,25 +164,33 @@ cpd_sum=0
 for i in range(n):
 
   cpu=U[0][i]/m
+  cpl=cpu*Periods[index[i]]
+  # print("cpl:", cpl)
 
-  cpd_edf=m
-  for cpd_edf in range(int(m),0,-1):
-    if(1 == cpd_edf):
-      break
-    if((1/cab_edf) < math.ceil(float(m)/(cpd_edf-1))*cpu):
-      break
 
-  cpd_fp=m
-  for cpd_fp in range(int(m),0,-1):
-    if(1 == cpd_fp):
-      break
-    if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
-      break
+  cpd = math.ceil((U[0][i] * Periods[index[i]] - cpl)/(Periods[index[i]] - cpl))
+
+  # print("cpd:", cpd)
+
+
+  # cpd_edf=m
+  # for cpd_edf in range(int(m),0,-1):
+  #   if(1 == cpd_edf):
+  #     break
+  #   if((1/cab_edf) < math.ceil(float(m)/(cpd_edf-1))*cpu):
+  #     break
+
+  # cpd_fp=m
+  # for cpd_fp in range(int(m),0,-1):
+  #   if(1 == cpd_fp):
+  #     break
+  #   if((1/cab_fp) < math.ceil(float(m)/(cpd_fp-1))*cpu):
+  #     break
 
   priority = 1 + i;
 
-  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_edf, duration))
-  g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd_fp, duration))
+  g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
+  g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
   g.write('sleep 0.1\n')
   g2.write('sleep 0.1\n')
 g.close()
