@@ -23,6 +23,7 @@ sleep 1
 release_ts &
 sleep $duration
 done
+wait
 cd $FT_DIR/gedf
 ./ft.sh gedf
 
@@ -38,6 +39,7 @@ sleep 1
 release_ts &
 sleep $duration
 done
+wait
 cd $FT_DIR/cgedf
 ./ft.sh cgedf
 
@@ -53,6 +55,7 @@ sleep 1
 release_ts &
 sleep $duration
 done
+wait
 cd $FT_DIR/gfp
 ./ft.sh gfp
 
@@ -69,6 +72,7 @@ sleep 1
 release_ts &
 sleep $duration
 done
+wait
 cd $FT_DIR/cgfp
 ./ft.sh cgfp
 
