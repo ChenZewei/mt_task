@@ -156,10 +156,10 @@ cab_edf=1
 cab_fp=1
 
 # for global scheduling
-file_name_1 = './global_edf_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+file_name_1 = './global_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
 g = open(file_name_1, 'w')
-file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
-g2 = open(file_name_2, 'w')
+# file_name_2 = './global_fp_'+sys.argv[1]+'_'+sys.argv[2]+'_'+sys.argv[3]+'_'+sys.argv[4]+'_'+sys.argv[5]+'.sh'
+# g2 = open(file_name_2, 'w')
 cpd_sum=0
 for i in range(n):
 
@@ -190,11 +190,11 @@ for i in range(n):
   priority = 1 + i;
 
   g.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
-  g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
+  # g2.write('./mt_task -u %f -p %d -d %d -q %d -m %d -c %d -t %d &\n' % (U[0][i], Periods[index[i]], Periods[index[i]], priority, m, cpd, duration))
   g.write('sleep 0.1\n')
-  g2.write('sleep 0.1\n')
+  # g2.write('sleep 0.1\n')
 g.close()
-g2.close()
+# g2.close()
 
 # for t in T:
   
