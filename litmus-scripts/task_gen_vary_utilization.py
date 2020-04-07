@@ -227,5 +227,5 @@ g.close()
 
 
 os.chmod(file_name_1, stat.S_IRWXU)
-os.chmod(file_name_2, stat.S_IRWXU)
+# os.chmod(file_name_2, stat.S_IRWXU)
 # os.chmod(file_name_3, stat.S_IRWXU)
